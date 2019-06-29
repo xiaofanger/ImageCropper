@@ -44,9 +44,9 @@ public class OCRServiceBean implements OCRService {
     public void onAppStarted(AppContextStartedEvent event){
         init();
     }
-    static final String  idCardSide_FRONT="front";
-    static final String  idCardSide_BACK="back";
-    IDCard idCard(String imageBase64, String idCardSide){
+
+    @Override
+    public IDCard idCard(String imageBase64, String idCardSide){
         // 传入可选参数调用接口
         HashMap<String, String> options = new HashMap<String, String>();
         options.put("detect_direction", "true");
@@ -97,6 +97,7 @@ public class OCRServiceBean implements OCRService {
         byte[] decoded = org.apache.commons.codec.binary.Base64.decodeBase64(base64.getBytes());
         return decoded;
     }
+    @Override
     public BankCard bankCard(String base64){
         HashMap<String, String> options = new HashMap<String, String>();
         // 参数为本地路径
