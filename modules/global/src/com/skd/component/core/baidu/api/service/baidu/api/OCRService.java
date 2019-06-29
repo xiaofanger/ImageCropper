@@ -5,7 +5,13 @@ import com.skd.component.entity.baidu.api.IDCard;
 
 public interface OCRService {
     String NAME = "skd_OCRService";
+    /**
+     * 身份证正面
+     */
     String  idCardSide_FRONT="front";
+    /**
+     * 身份证反面
+     */
     String  idCardSide_BACK="back";
 
     IDCard idCard(String imageBase64, String idCardSide);
