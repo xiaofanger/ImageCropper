@@ -107,7 +107,9 @@ configure(coreModule) {
 
     dependencies {
         compile(globalModule)
-        compile 'com.baidu.aip:java-sdk:4.11.3'
+        compile ('com.baidu.aip:java-sdk:4.11.3'){
+            exclude module: 'slf4j-simple' //by artifact name
+        }
         compileOnly(servletApi)
         jdbc(hsql)
         testRuntime(hsql)
