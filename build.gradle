@@ -19,7 +19,7 @@ buildscript {
     }
 }
 
-def modulePrefix = 'app'
+def modulePrefix = 'skdCmp'
 
 def globalModule = project(":${modulePrefix}-global")
 def coreModule = project(":${modulePrefix}-core")
@@ -68,6 +68,19 @@ configure([globalModule, coreModule, webModule, webToolkitModule]) {
     artifacts {
         archives sourceJar
     }
+}
+
+configure([globalModule, coreModule, webModule]) {
+    apply(plugin: 'groovy')
+
+    sourceSets {
+        main { groovy { srcDirs = ["src"] } }
+        test { groovy { srcDirs = ["test"] } }
+    }
+
+    sourceSets.main.output.classesDir = new File(project.buildDir, "classes/main")
+    sourceSets.test.output.classesDir = new File(project.buildDir, "classes/test")
+
 }
 
 configure(globalModule) {

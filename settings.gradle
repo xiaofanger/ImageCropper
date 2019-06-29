@@ -1,5 +1,5 @@
 rootProject.name = 'skd-component'
-def modulePrefix = 'app'
+def modulePrefix = 'skdCmp'
 include(":${modulePrefix}-global", ":${modulePrefix}-core", ":${modulePrefix}-web", ":${modulePrefix}-web-toolkit")
 project(":${modulePrefix}-global").projectDir = new File(settingsDir, 'modules/global')
 project(":${modulePrefix}-core").projectDir = new File(settingsDir, 'modules/core')
