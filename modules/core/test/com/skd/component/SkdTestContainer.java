@@ -26,6 +26,7 @@ public class SkdTestContainer extends TestContainer {
                 // List the files defined in your web.xml
                 // in appPropertiesConfig context parameter of the core module
                 "com/skd/component/app.properties",
+                "com/skd/component/app-test.properties",
                 // Add this file which is located in CUBA and defines some properties
                 // specifically for test environment. You can replace it with your own
                 // or add another one in the end.
