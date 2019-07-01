@@ -8,12 +8,15 @@ import com.haulmont.cuba.core.global.TimeSource;
 import com.haulmont.cuba.core.sys.events.AppContextStartedEvent;
 import com.skd.component.core.baidu.api.service.baidu.api.OCRAPIConfig;
 import com.skd.component.entity.baidu.api.*;
+import org.apache.commons.collections4.MapUtils;
+import org.aspectj.lang.annotation.Before;
 import org.json.JSONObject;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.Map;
 import java.util.HashMap;
 
 @Component(OCR.NAME)
@@ -49,15 +52,16 @@ public class OCR {
         IDCard idCard=metadata.create(IDCard.class);
         int direction = res.getInt("direction");
         String image_status = res.getString("image_status");
-        String idcard_type = res.getString("idcard_type");
-        String edit_tool = res.getString("edit_tool");
+        Map<String,Object> map = res.toMap();
+        String idcard_type = MapUtils.getString(map,"idcard_type");
+        String edit_tool = MapUtils.getString(map,"edit_tool");
 
         idCard.setDirection(IDCardImageDirection.fromId(direction));
         idCard.setImageStatus(IDCardImageStatus.fromId(image_status));
         idCard.setIdcardType(idcard_type);
         idCard.setEditTool(edit_tool);
         JSONObject words_result = res.getJSONObject("words_result");
-        if(words_result!=null){
+        if(words_result!=null && "front".equals(idCardSide)){
             JSONObject 住址=words_result.getJSONObject("住址");
             String address = 住址.getString("words");
             JSONObject 出生=words_result.getJSONObject("出生");
@@ -105,6 +109,7 @@ public class OCR {
         bankCard.setCardType(BankCardType.fromId(Integer.toString(bank_card_type)));
         return bankCard;
     }
+
     public void init () {
         OCRAPIConfig config = configuration.getConfig(OCRAPIConfig.class);
         // 初始化一个AipOcr
