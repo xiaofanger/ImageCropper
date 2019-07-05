@@ -1,6 +1,12 @@
 
 buildscript {
     ext.cubaVersion = '7.0.7'
+    ext.aliRepo=[
+            snapshot: 'https://repo.rdc.aliyun.com/repository/72077-snapshot-057BdJ/',
+            release: 'https://repo.rdc.aliyun.com/repository/72077-release-FWXfLw/',
+            username :'zgd8Rx',
+            password :'r4CKJ2iYrP'
+    ]
     repositories {
 
         maven {
@@ -13,6 +19,22 @@ buildscript {
         maven {
             url 'https://maven.aliyun.com/nexus/content/groups/public/'
         }
+
+        maven {
+            credentials {
+                username aliRepo.username
+                password aliRepo.password
+            }
+            url aliRepo.release
+        }
+        maven {
+            credentials {
+                username aliRepo.username
+                password aliRepo.password
+            }
+            url aliRepo.snapshot
+        }
+
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -36,9 +58,16 @@ cuba {
         version = '0.1'
         isSnapshot = true
     }
+
+    uploadRepository {
+        url =aliRepo.snapshot
+        user = aliRepo.username
+        password =aliRepo.password
+    }
+
     tomcat {
         dir = "$project.rootDir/deploy/tomcat" 
-        port = '8085'
+        port = '8086'
         ajpPort = '8014'
         shutdownPort = '8010'
         debugPort = '8792'
