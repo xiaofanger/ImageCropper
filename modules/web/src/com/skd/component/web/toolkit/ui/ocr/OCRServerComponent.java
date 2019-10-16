@@ -3,13 +3,15 @@ package com.skd.component.web.toolkit.ui.ocr;
 
 import com.haulmont.cuba.web.widgets.WebJarResource;
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.StyleSheet;
 import com.vaadin.shared.ui.JavaScriptComponentState;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractJavaScriptComponent;
 import elemental.json.JsonArray;
 
-@WebJarResource("jquery-ui/1.12.1/jquery-ui.min.js")
+@WebJarResource({"jquery/3.3.1/jquery.js","jquery-ui/1.12.1/jquery-ui.min.js"})
 @JavaScript({"webcam.js","ocr-connector.js"})
+@StyleSheet({"ocr-connector.css"})
 public class OCRServerComponent extends AbstractJavaScriptComponent {
 
     public interface SnapshotChangedListener {
