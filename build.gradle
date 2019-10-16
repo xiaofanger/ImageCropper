@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '7.0.7'
+    ext.cubaVersion = '7.0.11'
     ext.aliRepo=[
             snapshot: 'https://repo.rdc.aliyun.com/repository/72077-snapshot-057BdJ/',
             release: 'https://repo.rdc.aliyun.com/repository/72077-release-FWXfLw/',
@@ -66,7 +66,7 @@ cuba {
     }
 
     tomcat {
-        dir = "$project.rootDir/deploy/tomcat" 
+        dir = "$project.rootDir/deploy/tomcat"
         port = '8086'
         ajpPort = '8014'
         shutdownPort = '8010'
@@ -236,6 +236,7 @@ configure(webModule) {
 configure(webToolkitModule) {
     dependencies {
         compile(webModule)
+        runtime(servletApi)
     }
 
     jar {
@@ -244,6 +245,7 @@ configure(webToolkitModule) {
 
     task buildWidgetSet(type: CubaWidgetSetBuilding) {
         widgetSetClass = 'com.skd.component.web.toolkit.ui.AppWidgetSet'
+        draft=true
     }
 
     task debugWidgetSet(type: CubaWidgetSetDebug) {
