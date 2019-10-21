@@ -1,4 +1,4 @@
-package com.skd.component.web.screens;
+package com.skd.component.web.screens.ocr;
 
 import com.haulmont.cuba.gui.components.GroupBoxLayout;
 import com.haulmont.cuba.gui.components.HBoxLayout;

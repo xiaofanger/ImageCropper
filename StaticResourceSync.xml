@@ -1,0 +1,22 @@
+<!--
+author:green
+-->
+<project name="StaticResourceSync" default="syncResource" basedir="." >
+    <echo>sync</echo>
+	<dirname property="antfile.dir" file="${ant.file}"/>
+
+	<fileset id="resourceDir" dir="${basedir}/modules/web/src/com/skd/component/web/toolkit">
+        <include name="**/*.js" />
+        <include name="**/*.css" />
+	     <modified>
+	     	<param name="update" value="false"/>
+		</modified> 
+    </fileset>	
+	<target name="syncResource" description="Sync Local Package Src">
+		<copy todir="${basedir}/deploy/tomcat/webapps/skdCmp/VAADIN" flatten="true">
+			<fileset refid="resourceDir"></fileset>
+		</copy>
+		<echo>同步静态资源完成</echo>
+	</target>
+</project>
+	
