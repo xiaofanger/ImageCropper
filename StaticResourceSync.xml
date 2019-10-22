@@ -16,7 +16,7 @@ author:green
 		<copy todir="${basedir}/deploy/tomcat/webapps/skdCmp/VAADIN" flatten="true">
 			<fileset refid="resourceDir"></fileset>
 		</copy>
-		<echo>同步静态资源完成</echo>
+		<echo>sync complete</echo>
 	</target>
 </project>
 	
