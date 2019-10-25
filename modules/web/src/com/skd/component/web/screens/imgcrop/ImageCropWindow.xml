@@ -17,10 +17,9 @@
                 </vbox>
             </hbox>
 
-            <buttonsPanel id="toolbar" align="MIDDLE_RIGHT"  width="100%" expand="fillbox">
-                <hbox id="fillbox"></hbox>
-                <button caption="msg://okText" id="okBtn" align="MIDDLE_RIGHT"/>
-                <button caption="msg://cancelText" id="cancelBtn" align="MIDDLE_RIGHT"/>
+            <buttonsPanel id="toolbar" width="100%" align="MIDDLE_RIGHT">
+                <button caption="msg://okText" id="okBtn" align="MIDDLE_CENTER"/>
+                <button caption="msg://cancelText" id="cancelBtn" align="MIDDLE_CENTER"/>
             </buttonsPanel>
         </vbox>
     </layout>

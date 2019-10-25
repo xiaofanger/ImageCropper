@@ -14,6 +14,7 @@ import com.vaadin.shared.ui.JavaScriptComponentState;
 import com.vaadin.ui.AbstractJavaScriptComponent;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.io.File;
@@ -77,9 +78,9 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
 
     /**
      * 调协剪裁质量
-     * @param quality
+     * @param quality 0-1
      */
-    public void setQuality(int quality) {
+    public void setQuality(float quality) {
         this.getState(true).quality = quality;
     }
 
@@ -157,6 +158,15 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
     }
 
     private ImageUpdateListener imageUpdateListener;
+    public String getCurrentImageBase64(){
+        if(currentImageBase64==null){
+           return  currentImageBase64;
+        }
+        if(currentImageBase64.indexOf(",")>-1){
+            return currentImageBase64.split(",")[1];
+        }
+        return currentImageBase64;
+    }
     String currentImageBase64;
     public ImgCropServerComponent() {
         addFunction("imageUpdate", arguments -> {
@@ -179,7 +189,7 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         public boolean mouseWheelZoom;
         public boolean showZoomer;
         public ViewPort viewPort;
-        public int quality = 1;
+        public float quality = 1;
 
     }
 }

@@ -1,6 +1,5 @@
 package com.skd.component.web.screens.imgcrop;
 
-import com.haulmont.cuba.core.entity.FileDescriptor;
 import com.haulmont.cuba.gui.screen.ScreenOptions;
 
 import java.io.File;
@@ -11,7 +10,7 @@ import java.io.File;
 public class ImageCropWindowOptions implements ScreenOptions {
 
     private int cropQuality=10;
-    private Byte[] result;
+    private byte[] result;
 
     public ImageCropWindowOptions(File file){
         this.imageFile=file;
@@ -28,10 +27,10 @@ public class ImageCropWindowOptions implements ScreenOptions {
     public int getCropQuality() {
         return cropQuality;
     }
-    public void setResult(Byte[] result){
+    public void setResult(byte[] result){
         this.result=result;
     }
-    public Byte[] getResult(){
+    public byte[] getResult(){
         return result;
     }
 }
