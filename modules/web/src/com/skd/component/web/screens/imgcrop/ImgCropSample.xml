@@ -3,6 +3,15 @@
         caption="msg://caption"
         messagesPack="com.skd.component.web.screens.imgcrop">
     <layout>
-        <vbox id="imgcropCtn"></vbox>
+        <vbox spacing="true">
+            <image width="200px" height="200px" id="image">
+            </image>
+            <hbox>
+                <upload id="uploadField" />
+                <button id="cropBtn" caption="&#21098;&#35009;"/>
+            </hbox>
+            <vbox id="imgcropCtn">
+            </vbox>
+        </vbox>
     </layout>
 </window>
