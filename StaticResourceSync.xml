@@ -5,17 +5,21 @@ author:green
     <echo>sync</echo>
 	<dirname property="antfile.dir" file="${ant.file}"/>
 
-	<fileset id="resourceDir" dir="${basedir}/modules/web/src/com/skd/component/web/toolkit">
+	<fileset id="resourceDir" dir="${basedir}/modules/web/src">
         <include name="**/*.js" />
         <include name="**/*.css" />
 	     <modified>
 	     	<param name="update" value="false"/>
 		</modified> 
-    </fileset>	
+    </fileset>
+
 	<target name="syncResource" description="Sync Local Package Src">
 		<copy todir="${basedir}/deploy/tomcat/webapps/skdCmp/VAADIN" flatten="true">
 			<fileset refid="resourceDir"></fileset>
 		</copy>
+        <copy todir="${basedir}/deploy/tomcat/webapps/skdCmp/WEB-INF/classes">
+            <fileset refid="resourceDir"></fileset>
+        </copy>
 		<echo>sync complete</echo>
 	</target>
 </project>
