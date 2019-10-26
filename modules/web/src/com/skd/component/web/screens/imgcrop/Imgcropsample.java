@@ -46,13 +46,7 @@ public class Imgcropsample extends Screen {
     private Dialogs dialogs;
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
-//        ImgCropServerComponent imgcrop = new ImgCropServerComponent();
-//        imgcrop.setWidth("250px");
-//        imgcrop.setHeight("250px");
-//        imgcrop.setImageUpdateListener(newValue -> {
-//            System.out.println("test");
-//        });
-//        imgcropCtn.unwrap(Layout.class).addComponent(imgcrop);
+
     }
 
     @Subscribe("cropBtn")
