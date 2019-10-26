@@ -2,7 +2,7 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://caption"
         messagesPack="com.skd.component.web.screens.imgcrop">
-    <dialogMode width="600px" height="400px" forceDialog="true"/>
+    <dialogMode width="600px" height="400px" forceDialog="true" resizable="true"/>
     <layout expand="rootCtn">
         <vbox id="rootCtn" spacing="true" expand="images">
             <hbox id="images" width="100%" margin="true" spacing="true">

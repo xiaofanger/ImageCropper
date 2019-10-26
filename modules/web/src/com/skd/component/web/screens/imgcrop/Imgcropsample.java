@@ -63,9 +63,11 @@ public class Imgcropsample extends Screen {
                 .withOptions(options)
                 .withAfterCloseListener(e -> {
                     notifications.create().withCaption("Closed").show();
-                })
-                .build()
-                .show();
+                }).build();
+        DialogWindow dialogWindow=((DialogWindow)screen.getWindow());
+        dialogWindow.setDialogHeight("600px");
+        dialogWindow.setDialogWidth("800px");
+                screen.show();
     }
 
     @Subscribe("uploadField")
