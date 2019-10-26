@@ -1,6 +1,7 @@
 package com.skd.component.web.screens.imgcrop;
 
 import com.haulmont.cuba.gui.screen.ScreenOptions;
+import com.skd.component.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 
 import java.io.File;
 
@@ -11,13 +12,25 @@ public class ImageCropWindowOptions implements ScreenOptions {
 
     private int cropQuality=10;
     private byte[] result;
+    private ImgCropServerComponent.ViewPort viewPort;
 
     public ImageCropWindowOptions(File file){
-        this.imageFile=file;
+        this(file,10,null);
     }
-    public ImageCropWindowOptions(File file,int cropQuality){
+    public ImageCropWindowOptions(File file, int cropQuality){
+        this(file,cropQuality,null);
+    }
+
+    /**
+     * 图片剪裁选项
+     * @param file 要剪裁的图片文件
+     * @param cropQuality 图片质量 1-10
+     * @param viewPort
+     */
+    public ImageCropWindowOptions(File file, int cropQuality, ImgCropServerComponent.ViewPort viewPort){
         this.imageFile=file;
         this.cropQuality=cropQuality;
+        this.viewPort=viewPort;
     }
     private File imageFile;
 
@@ -32,5 +45,9 @@ public class ImageCropWindowOptions implements ScreenOptions {
     }
     public byte[] getResult(){
         return result;
+    }
+
+    public ImgCropServerComponent.ViewPort getViewPort() {
+        return viewPort;
     }
 }

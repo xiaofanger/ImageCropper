@@ -64,7 +64,11 @@ public class ImageCropWindow extends Screen {
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
-        this.imgCrop = new ImgCropServerComponent(this.options.getImageFile());
+        this.imgCrop = new ImgCropServerComponent(
+                this.options.getImageFile(),
+                this.options.getViewPort(),
+                this.options.getCropQuality()
+                );
         cropCmpCtn.unwrap(Layout.class).addComponent(imgCrop);
         imgCrop.setImageUpdateListener(imageBase64 -> {
             if(imageBase64.contains(",")){
