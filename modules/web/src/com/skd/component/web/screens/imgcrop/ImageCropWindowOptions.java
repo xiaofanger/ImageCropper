@@ -15,10 +15,10 @@ public class ImageCropWindowOptions implements ScreenOptions {
     private ImgCropServerComponent.ViewPort viewPort;
 
     public ImageCropWindowOptions(File file){
-        this(file,10,null);
+        this(file,10,new ImgCropServerComponent.ViewPort());
     }
     public ImageCropWindowOptions(File file, int cropQuality){
-        this(file,cropQuality,null);
+        this(file,cropQuality,new ImgCropServerComponent.ViewPort());
     }
 
     /**
