@@ -11,7 +11,8 @@ function com_skd_component_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
     var me=this;
     var updateF=function(){
         croppie.result({
-            quality:quality
+            quality:quality,
+            format:"jpeg"
         }).then(function (base64) {
             me.imageUpdate(base64);
         })
@@ -21,6 +22,7 @@ function com_skd_component_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
         var opts={};
         var state = connector.getState();
         quality=state.quality;
+        quality=quality.toFixed(1);
         if(croppie==null){
             opts={
                 customClass:state.customClass,
@@ -35,7 +37,7 @@ function com_skd_component_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
             element.addEventListener('update', function(ev) {
                 updateF();
             });
-            var url="data:image/png;base64,"+state.imageBase64;
+            var url="data:image/jpeg;base64,"+state.imageBase64;
             croppie=new Croppie(element, opts);
             croppie.bind({
                 url:url
