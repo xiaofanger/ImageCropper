@@ -79,18 +79,14 @@ public class ImageCropWindow extends Screen {
                 imageBase64=imageBase64.split(",")[1];
             }
             byte[] bytes = Base64.decodeBase64(imageBase64);
-            try {
-                InputStream inputStream=new ByteArrayInputStream(bytes);
-                previewImage.setSource(StreamResource.class).setStreamSupplier(new Supplier<InputStream>() {
-                    @Override
-                    public InputStream get() {
-                        return inputStream;
-                    }
-                });
-                fileSizeLabel.setValue(getDataSize(bytes.length));
-            } catch (IOException | FileStorageException e) {
-                throw  new RuntimeException(e);
-            }
+            InputStream inputStream=new ByteArrayInputStream(bytes);
+            previewImage.setSource(StreamResource.class).setStreamSupplier(new Supplier<InputStream>() {
+                @Override
+                public InputStream get() {
+                    return inputStream;
+                }
+            });
+            fileSizeLabel.setValue(getDataSize(bytes.length));
 
         });
     }
