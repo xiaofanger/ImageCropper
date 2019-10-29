@@ -9,13 +9,17 @@ import com.vaadin.ui.Layout;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 
 import javax.inject.Inject;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 
 /**
@@ -76,11 +80,15 @@ public class ImageCropWindow extends Screen {
             }
             byte[] bytes = Base64.decodeBase64(imageBase64);
             try {
-                //TODO:可能会产生较多临时文件，需要完善
-                File tmpFile = fileUploadingAPI.createFile().getFile();
-                FileUtils.writeByteArrayToFile(tmpFile,bytes);
-                previewImage.setSource(FileResource.class).setFile(tmpFile);
+                InputStream inputStream=new ByteArrayInputStream(bytes);
+                previewImage.setSource(StreamResource.class).setStreamSupplier(new Supplier<InputStream>() {
+                    @Override
+                    public InputStream get() {
+                        return inputStream;
+                    }
+                });
                 fileSizeLabel.setValue(getDataSize(bytes.length));
+                FileUtils.forceDelete(tmpFile);
             } catch (IOException | FileStorageException e) {
                 throw  new RuntimeException(e);
             }
