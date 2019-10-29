@@ -9,7 +9,7 @@ import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractJavaScriptComponent;
 import elemental.json.JsonArray;
 
-@WebJarResource({"jquery/3.3.1/jquery.js","jquery-ui/1.12.1/jquery-ui.min.js"})
+@WebJarResource({"jquery:jquery.min.js","jquery-ui:jquery-ui.min.js"})
 @JavaScript({"webcam.js","ocr-connector.js"})
 @StyleSheet({"ocr-connector.css"})
 public class OCRServerComponent extends AbstractJavaScriptComponent {
