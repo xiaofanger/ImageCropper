@@ -22,7 +22,7 @@ function com_skd_component_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
         var opts={};
         var state = connector.getState();
         quality=state.quality;
-        quality=quality.toFixed(1);
+        quality=parseFloat(quality.toFixed(1));
         if(croppie==null){
             opts={
                 customClass:state.customClass,
