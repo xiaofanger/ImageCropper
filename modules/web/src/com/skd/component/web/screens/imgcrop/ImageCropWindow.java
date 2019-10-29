@@ -88,7 +88,6 @@ public class ImageCropWindow extends Screen {
                     }
                 });
                 fileSizeLabel.setValue(getDataSize(bytes.length));
-                FileUtils.forceDelete(tmpFile);
             } catch (IOException | FileStorageException e) {
                 throw  new RuntimeException(e);
             }
