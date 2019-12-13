@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '7.0.11'
+    ext.cubaVersion = '7.1.2'
     ext.aliRepo=[
             snapshot: 'https://repo.rdc.aliyun.com/repository/72077-snapshot-057BdJ/',
             release: 'https://repo.rdc.aliyun.com/repository/72077-release-FWXfLw/',

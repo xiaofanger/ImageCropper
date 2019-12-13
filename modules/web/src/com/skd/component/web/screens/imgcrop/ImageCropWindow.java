@@ -1,6 +1,10 @@
 package com.skd.component.web.screens.imgcrop;
 
+import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.FileStorageException;
+import com.haulmont.cuba.gui.ScreenBuilders;
+import com.haulmont.cuba.gui.builders.AfterScreenCloseEvent;
+import com.haulmont.cuba.gui.builders.ScreenClassBuilder;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
@@ -19,6 +23,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 
@@ -55,6 +60,7 @@ public class ImageCropWindow extends Screen {
             }
             qualityField.setOptionsList(list);
             qualityField.setValue(this.options.getCropQuality());
+
         }
 
 
@@ -94,21 +100,7 @@ public class ImageCropWindow extends Screen {
 
 
     public static String getDataSize(long size){
-        DecimalFormat formater = new DecimalFormat("####.00");
-        if(size<1024){
-            return size+"bytes";
-        }else if(size<1024*1024){
-            float kbsize = size/1024f;
-            return formater.format(kbsize)+"KB";
-        }else if(size<1024*1024*1024){
-            float mbsize = size/1024f/1024f;
-            return formater.format(mbsize)+"MB";
-        }else if(size<1024*1024*1024*1024){
-            float gbsize = size/1024f/1024f/1024f;
-            return formater.format(gbsize)+"GB";
-        }else{
-            return "size: error";
-        }
+        return FileUtils.byteCountToDisplaySize(size);
     }
 
 
@@ -125,9 +117,24 @@ public class ImageCropWindow extends Screen {
             imgCrop.setQuality(((Integer)event.getValue()).floatValue()/10f);
         }
     }
-
     @Subscribe("cancelBtn")
     public void onCancelBtnClick(Button.ClickEvent event) {
         this.close(WINDOW_DISCARD_AND_CLOSE_ACTION);
+    }
+    public static void showAsDialog(FrameOwner origin,ImageCropWindowOptions options,Consumer<AfterScreenCloseEvent<ImageCropWindow>> closeEventConsumer){
+        ScreenBuilders screenBuilders = AppBeans.get(ScreenBuilders.class);
+        ScreenClassBuilder<ImageCropWindow> screenBuilder = screenBuilders.screen(origin)
+                .withScreenClass(ImageCropWindow.class)
+                .withLaunchMode(OpenMode.DIALOG)
+                .withOptions(options);
+
+        if(closeEventConsumer!=null){
+            screenBuilder.withAfterCloseListener(closeEventConsumer);
+        }
+        ImageCropWindow screen = screenBuilder.build();
+        DialogWindow dialogWindow=((DialogWindow)screen.getWindow());
+        dialogWindow.setDialogHeight(options.windowHeight);
+        dialogWindow.setDialogWidth(options.windowWidth);
+        screen.show();
     }
 }

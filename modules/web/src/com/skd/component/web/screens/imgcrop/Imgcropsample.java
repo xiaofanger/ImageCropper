@@ -14,6 +14,7 @@ import com.skd.component.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 import com.vaadin.ui.Layout;
 
 import javax.inject.Inject;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.UUID;
 
@@ -57,17 +58,16 @@ public class Imgcropsample extends Screen {
             return;
         }
         ImageCropWindowOptions options=new ImageCropWindowOptions(file);
-        Screen screen = screenBuilders.screen(this)
-                .withScreenClass(ImageCropWindow.class)
-                .withLaunchMode(OpenMode.DIALOG)
-                .withOptions(options)
-                .withAfterCloseListener(e -> {
-                    notifications.create().withCaption("Closed").show();
-                }).build();
-        DialogWindow dialogWindow=((DialogWindow)screen.getWindow());
-        dialogWindow.setDialogHeight("600px");
-        dialogWindow.setDialogWidth("800px");
-                screen.show();
+        ImageCropWindow.showAsDialog(this,options,(cropWindowAfterScreenCloseEvent)->{
+            if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
+               //close by  "Cancel" button
+            }else if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
+                // close by "ok" button
+                byte[] result = options.getResult();
+                image.setSource(StreamResource.class)
+                        .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+            }
+        });
     }
 
     @Subscribe("uploadField")

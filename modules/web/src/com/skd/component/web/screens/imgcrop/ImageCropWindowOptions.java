@@ -25,7 +25,7 @@ public class ImageCropWindowOptions implements ScreenOptions {
      * 图片剪裁选项
      * @param file 要剪裁的图片文件
      * @param cropQuality 图片质量 1-10
-     * @param viewPort
+     * @param viewPort 目标区域视图配置
      */
     public ImageCropWindowOptions(File file, int cropQuality, ImgCropServerComponent.ViewPort viewPort){
         this.imageFile=file;
@@ -33,7 +33,6 @@ public class ImageCropWindowOptions implements ScreenOptions {
         this.viewPort=viewPort;
     }
     private File imageFile;
-
     public File getImageFile() {
         return imageFile;
     }
@@ -46,6 +45,8 @@ public class ImageCropWindowOptions implements ScreenOptions {
     public byte[] getResult(){
         return result;
     }
+    public String windowWidth="800px";
+    public String windowHeight="600px";
 
     public ImgCropServerComponent.ViewPort getViewPort() {
         return viewPort;
