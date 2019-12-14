@@ -4,8 +4,8 @@ buildscript {
     ext.aliRepo=[
             snapshot: 'https://repo.rdc.aliyun.com/repository/72077-snapshot-057BdJ/',
             release: 'https://repo.rdc.aliyun.com/repository/72077-release-FWXfLw/',
-            username :'zgd8Rx',
-            password :'r4CKJ2iYrP'
+            username :rootProject.hasProperty("skdAaliRepo.UserName")?rootProject["skdAaliRepo.UserName"]:"",
+            password :rootProject.hasProperty("skdAaliRepo.Password")?rootProject["skdAaliRepo.Password"]:""
     ]
     repositories {
 
@@ -38,6 +38,7 @@ buildscript {
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0"
     }
 }
 
@@ -248,3 +249,40 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
     }
 }
 
+
+subprojects {
+    apply plugin: 'com.jfrog.bintray'
+
+    bintray {
+        user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+        key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+
+        configurations = ['archives']
+
+        // make files public ?
+        publish = true
+        // override existing artifacts?
+        override = true
+
+        // metadata
+        pkg {
+            repo = 'ImageCropper'           // your repository name
+            name = 'ImageCropper'  // package name - it will be created upon upload
+            desc = 'A component for cropping big image from CUBACN '  // optional package description
+
+            // organization name, if your repository is created inside an organization.
+            // remove this parameter if you don't have an organization
+//            userOrg = 'jupiter-org'
+
+            websiteUrl = 'https://github.com/cubacn/ImageCropper'
+            issueTrackerUrl = 'https://github.com/cubacn/ImageCropper/issues'
+            vcsUrl = 'git@github.com:cubacn/ImageCropper.git' // mandatory for Open Source projects
+
+            licenses = ["Apache-2.0"]
+            labels = ['cuba', 'cuba-platform', 'cubaChina', 'imageCropper','Chinese']
+
+            githubRepo = 'cubacn/ImageCropper' // optional Github repository
+            githubReleaseNotesFile = 'README.md' // optional Github readme file
+        }
+    }
+}
