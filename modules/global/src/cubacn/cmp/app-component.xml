@@ -5,26 +5,26 @@
     <module name="global" blocks="*">
         <artifact name="cubacnCmp-Crop-global" appJar="true"/>
 
-        <property name="cuba.persistenceConfig" value="+/cubacn/cmp/crop/persistence.xml"/>
-        <property name="cuba.metadataConfig" value="+/cubacn/cmp/crop/metadata.xml"/>
-        <property name="cuba.viewsConfig" value="+/cubacn/cmp/crop/views.xml"/>
+        <property name="cuba.persistenceConfig" value="+cubacn/cmp/crop/persistence.xml"/>
+        <property name="cuba.metadataConfig" value="+cubacn/cmp/crop/metadata.xml"/>
+        <property name="cuba.viewsConfig" value="+cubacn/cmp/crop/views.xml"/>
     </module>
     <module name="core" dependsOn="global" blocks="core">
         <artifact name="cubacnCmp-Crop-core" appJar="true"/>
         <artifact name="cubacnCmp-Crop-core" classifier="db" ext="zip" configuration="dbscripts"/>
 
-        <property name="cuba.springContextConfig" value="+/cubacn/cmp/crop/spring.xml"/>
-        <property name="cuba.mainMessagePack" value="+cubacn.cmp.core"/>
+        <property name="cuba.springContextConfig" value="+cubacn/cmp/crop/spring.xml"/>
+        <property name="cuba.mainMessagePack" value="+cubacn.cmp.crop.core"/>
     </module>
     <module name="web" dependsOn="global" blocks="web">
         <artifact name="cubacnCmp-Crop-web" appJar="true"/>
         <artifact name="cubacnCmp-Crop-web" classifier="web" ext="zip" configuration="webcontent"/>
 
-        <property name="cuba.springContextConfig" value="+/cubacn/cmp/crop/web-spring.xml"/>
-        <property name="cuba.dispatcherSpringContextConfig" value="+/cubacn/cmp/crop/web-dispatcher-spring.xml"/>
-        <property name="cuba.windowConfig" value="+/cubacn/cmp/crop/web-screens.xml"/>
-        <property name="cuba.menuConfig" value="+/cubacn/cmp/crop/web-menu.xml"/>
-        <property name="cuba.permissionConfig" value="+/cubacn/cmp/crop/web-permissions.xml"/>
-        <property name="cuba.mainMessagePack" value="+cubacn.cmp.web"/>
+        <property name="cuba.springContextConfig" value="+cubacn/cmp/crop/web-spring.xml"/>
+        <property name="cuba.dispatcherSpringContextConfig" value="+cubacn/cmp/crop/web-dispatcher-spring.xml"/>
+        <property name="cuba.windowConfig" value="+cubacn/cmp/crop/web-screens.xml"/>
+        <property name="cuba.menuConfig" value="+cubacn/cmp/crop/web-menu.xml"/>
+        <property name="cuba.permissionConfig" value="+cubacn/cmp/crop/web-permissions.xml"/>
+        <property name="cuba.mainMessagePack" value="+cubacn.cmp.crop.web"/>
     </module>
 </app-component>

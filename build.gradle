@@ -53,7 +53,7 @@ apply(plugin: 'cuba')
 
 cuba {
     artifact {
-        group = 'cubacn.cmp'
+        group = 'cubacn.cmp.crop'
         version = '0.1'
         isSnapshot = true
     }
@@ -142,9 +142,6 @@ configure(coreModule) {
 
     dependencies {
         compile(globalModule)
-        compile ('com.baidu.aip:java-sdk:4.11.3'){
-            exclude module: 'slf4j-simple' //by artifact name
-        }
         compileOnly(servletApi)
         jdbc(hsql)
         testRuntime(hsql)
