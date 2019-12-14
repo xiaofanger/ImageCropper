@@ -11,7 +11,9 @@
 0. 支持剪裁区域大小、比例设置
 0. 剪裁结果实时预览
 
-#### 安装教程
+#### 演示
+![image](https://github.com/cubacn/ImageCropper/blob/master/imageCropDemo.gif)
+
 
 #### 使用说明
 1. 见内置示例
