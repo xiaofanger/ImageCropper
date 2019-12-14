@@ -1,36 +1,25 @@
-# skd-component
+# CUBACN 图片剪裁组件
 
-#### Description
-{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
+#### 介绍
 
-#### Software Architecture
-Software architecture description
+很多时候系统需要采集一些图片，同时对图片的尺寸、显示比例、大小有限制，通过手机或其它工具拍摄的照片往往不能满足系统对图片的限制条件。这些场景包括头像采集、身份证照片采集等。这个组件就是为了解决这些问题而设计的。
 
-#### Installation
+#### 功能
+0. 与CUBA自带的图片上传组件配合使用
+0. 提供简单的API打开图片剪裁窗口
+0. 支持图片压缩、缩放、拖拽
+0. 支持剪裁区域大小、比例设置
+0. 剪裁结果实时预览
 
-1. xxxx
-2. xxxx
-3. xxxx
+#### 安装教程
 
-#### Instructions
+#### 使用说明
+1. 见内置示例
 
-1. xxxx
-2. xxxx
-3. xxxx
+#### 参与贡献
 
-#### Contribution
+1. Fork 本仓库
+2. 新建 Feat_xxx 分支
+3. 提交代码
+4. 新建 Pull Request
 
-1. Fork the repository
-2. Create Feat_xxx branch
-3. Commit your code
-4. Create Pull Request
-
-
-#### Gitee Feature
-
-1. You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2. Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3. Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4. The most valuable open source project [GVP](https://gitee.com/gvp)
-5. The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6. The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)

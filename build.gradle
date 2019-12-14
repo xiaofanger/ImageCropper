@@ -41,7 +41,7 @@ buildscript {
     }
 }
 
-def modulePrefix = 'skdCmp'
+def modulePrefix = 'cubacnCmp-Crop'
 
 def globalModule = project(":${modulePrefix}-global")
 def coreModule = project(":${modulePrefix}-core")
@@ -53,7 +53,7 @@ apply(plugin: 'cuba')
 
 cuba {
     artifact {
-        group = 'com.skd.component'
+        group = 'cubacn.cmp'
         version = '0.1'
         isSnapshot = true
     }
@@ -207,7 +207,7 @@ configure(webModule) {
 
     task deployConf(type: Copy) {
         from file('src')
-        include "com/skd/component/**"
+        include "cubacn/cmp/crop/**"
         into "$cuba.tomcat.dir/conf/${modulePrefix}"
     }
 

@@ -1,5 +1,5 @@
 <!--
-author:green
+author:Ray.Lv
 -->
 <project name="StaticResourceSync" default="syncResource" basedir="." >
     <echo>sync</echo>
@@ -14,10 +14,10 @@ author:green
     </fileset>
 
 	<target name="syncResource" description="Sync Local Package Src">
-		<copy todir="${basedir}/deploy/tomcat/webapps/skdCmp/VAADIN" flatten="true">
+		<copy todir="${basedir}/deploy/tomcat/webapps/cubacnCmp-crop/VAADIN" flatten="true">
 			<fileset refid="resourceDir"></fileset>
 		</copy>
-        <copy todir="${basedir}/deploy/tomcat/webapps/skdCmp/WEB-INF/classes">
+        <copy todir="${basedir}/deploy/tomcat/webapps/cubacnCmp-crop/WEB-INF/classes">
             <fileset refid="resourceDir"></fileset>
         </copy>
 		<echo>sync complete</echo>

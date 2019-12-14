@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="cubacn.cmp.crop.web.screens.imgcrop">
+    <dialogMode width="600px" height="400px" forceDialog="true" resizable="true"/>
+    <layout expand="rootCtn">
+        <vbox id="rootCtn" spacing="true" expand="images">
+            <hbox id="images" width="100%" margin="true" spacing="true">
+                <vbox id="cropCmpCtn" spacing="true" width="100%" height="100%"/>
+                <vbox id="resultPreview" spacing="true" width="100%" height="100%" expand="previewImage">
+                    <image id="previewImage" align="MIDDLE_CENTER" alternateText="剪裁预览"
+                           width="100%" />
+                    <buttonsPanel id="infoBar" align="MIDDLE_LEFT">
+                        <label id="qualityFieldLabel" value="msg://quality" align="MIDDLE_LEFT">msg://quality</label>
+                        <lookupField id="qualityField" width="70px" align="MIDDLE_LEFT" />
+                        <label id="fileSizeLabel" align="MIDDLE_LEFT">大小:0KB</label>
+                    </buttonsPanel>
+                </vbox>
+            </hbox>
+
+            <buttonsPanel id="toolbar" align="MIDDLE_RIGHT">
+                <button caption="msg://okText" id="okBtn" align="MIDDLE_CENTER"/>
+                <button caption="msg://cancelText" id="cancelBtn" align="MIDDLE_CENTER"/>
+            </buttonsPanel>
+        </vbox>
+    </layout>
+</window>

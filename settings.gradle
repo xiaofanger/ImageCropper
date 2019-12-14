@@ -1,5 +1,5 @@
-rootProject.name = 'skd-component'
-def modulePrefix = 'skdCmp'
+rootProject.name = 'cubacnCmp-Crop'
+def modulePrefix = 'cubacnCmp-Crop'
 include(":${modulePrefix}-global", ":${modulePrefix}-core", ":${modulePrefix}-web")
 project(":${modulePrefix}-global").projectDir = new File(settingsDir, 'modules/global')
 project(":${modulePrefix}-core").projectDir = new File(settingsDir, 'modules/core')

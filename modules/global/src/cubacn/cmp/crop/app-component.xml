@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<app-component xmlns="http://schemas.haulmont.com/cuba/app-component.xsd"
+               dependsOn="com.haulmont.cuba">
+
+    <module name="global" blocks="*">
+        <artifact name="cubacnCmp-Crop-global" appJar="true"/>
+
+
+    </module>
+    <module name="core" dependsOn="global" blocks="core">
+        <artifact name="cubacnCmp-Crop-core" appJar="true"/>
+
+
+    </module>
+    <module name="web" dependsOn="global" blocks="web">
+        <artifact name="cubacnCmp-Crop-web" appJar="true"/>
+        <artifact name="cubacnCmp-Crop-web" classifier="web" ext="zip" configuration="webcontent"/>
+
+        <property name="cuba.springContextConfig" value="+/cubacn/cmp/crop/web-spring.xml"/>
+        <property name="cuba.dispatcherSpringContextConfig" value="+/cubacn/cmp/crop/web-dispatcher-spring.xml"/>
+        <property name="cuba.windowConfig" value="+/cubacn/cmp/crop/web-screens.xml"/>
+        <property name="cuba.menuConfig" value="+/cubacn/cmp/crop/web-menu.xml"/>
+        <property name="cuba.permissionConfig" value="+/cubacn/cmp/crop/web-permissions.xml"/>
+        <property name="cuba.mainMessagePack" value="+cubacn.cmp.web"/>
+    </module>
+</app-component>

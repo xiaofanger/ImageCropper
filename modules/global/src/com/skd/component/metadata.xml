@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<metadata xmlns="http://schemas.haulmont.com/cuba/metadata.xsd">
-
-    <metadata-model root-package="com.skd.component" namespace="skd">
-        <class>com.skd.component.entity.baidu.api.IDCard</class>
-        <class>com.skd.component.entity.baidu.api.BankCard</class>
-    </metadata-model>
-
-</metadata>

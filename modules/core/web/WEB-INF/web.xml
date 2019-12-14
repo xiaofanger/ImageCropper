@@ -8,9 +8,9 @@
     <context-param>
         <param-name>appPropertiesConfig</param-name>
         <param-value>
-            classpath:com/skd/component/app.properties
+            classpath:cubacn/cmp/crop/app.properties
             /WEB-INF/local.app.properties
-            "file:${catalina.base}/conf/skdCmp-core/local.app.properties"
+            "file:${catalina.base}/conf/cubacnCmp-Crop-core/local.app.properties"
         </param-value>
     </context-param>
     <!--Application components-->
