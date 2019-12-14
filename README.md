@@ -14,6 +14,29 @@
 #### 演示
 ![image](https://github.com/cubacn/ImageCropper/blob/master/imageCropDemo.gif)
 
+#### 调用示例
+```java
+    @Subscribe("cropBtn")
+    public void onCropBtnClick(Button.ClickEvent event) {
+        UUID fileId = uploadField.getFileId();
+        File file = fileUploadingAPI.getFile(fileId);
+        if(file==null){
+            return;
+        }
+        ImageCropWindowOptions options=new ImageCropWindowOptions(file);
+        ImageCropWindow.showAsDialog(this,options,(cropWindowAfterScreenCloseEvent)->{
+            if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
+               //close by  "Cancel" button
+            }else if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
+                // close by "ok" button
+                byte[] result = options.getResult();
+                image.setSource(StreamResource.class)
+                        .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+            }
+        });
+    }
+
+```
 
 #### 使用说明
 1. 见内置示例
