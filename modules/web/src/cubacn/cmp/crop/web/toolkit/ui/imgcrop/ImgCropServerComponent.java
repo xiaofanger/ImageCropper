@@ -149,25 +149,35 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
     }
 
     private ImageUpdateListener imageUpdateListener;
+
     public String getCurrentImageBase64(){
         if(currentImageBase64==null){
            return  currentImageBase64;
         }
-        if(currentImageBase64.indexOf(",")>-1){
+        if(currentImageBase64.contains(",")){
             return currentImageBase64.split(",")[1];
         }
         return currentImageBase64;
     }
+
     String currentImageBase64;
+
     public ImgCropServerComponent() {
         addFunction("imageUpdate", arguments -> {
             String imageBase64 = arguments.getString(0);
             currentImageBase64=imageBase64;
-            if (imageUpdateListener != null) {
-                imageUpdateListener.imageUpdate(imageBase64);
-            }
+//            if (imageUpdateListener != null) {
+//                imageUpdateListener.imageUpdate(imageBase64);
+//            }
         });
+//        addFunction("submitFunc", arguments -> {
+//            System.out.println(arguments.get(0));
+//        });
+    }
 
+    public String getUrl() {
+        String url = getState().imageBase64;
+        return url;
     }
 
     public static class ImgCropState extends JavaScriptComponentState {

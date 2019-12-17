@@ -3,6 +3,10 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
     var element = connector.getElement();
     var croppie=null;
     var quality=1;
+
+    var preview = document.createElement('div');
+    preview.setAttribute('class', 'cr-preview')
+
     connector.doDestroy=function(){
         if(croppie!=null){
             destroy();
@@ -28,17 +32,40 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
                 customClass:state.customClass,
                 enableExif:state.enableExif,
                 enableOrientation:state.enableOrientation,
-                enableResize:state.enableResize,
+                // enableResize:state.enableResize,
+                enableResize: true,
                 enableZoom:state.enableZoom,
                 mouseWheelZoom:state.mouseWheelZoom,
                 showZoomer:state.showZoomer,
                 viewport:state.viewPort
             };
-            element.addEventListener('update', function(ev) {
-                updateF();
-            });
+
             var url="data:image/jpeg;base64,"+state.imageBase64;
             croppie=new Croppie(element, opts);
+
+            var ew = element.offsetWidth;
+            var eh = element.offsetHeight;
+            var pw = ew * 0.26;
+            element.style.width = ew * 0.7 + 'px';
+            preview.style.maxHeight = pw + 'px';
+            preview.style.maxWidth = pw + 'px';
+            element.parentElement.appendChild(preview);
+
+            element.addEventListener('update', function(ev) {
+                updateF()
+                croppie.result({
+                    type: 'rawcanvas',
+                    quality:quality,
+                    size: {
+                        width: pw,
+                        height: pw
+                    }
+                }).then(function (canvas) {
+                    preview.childNodes.forEach(function(item) {item.remove()});
+                    preview.append(canvas)
+                })
+            });
+
             croppie.bind({
                 url:url
             })

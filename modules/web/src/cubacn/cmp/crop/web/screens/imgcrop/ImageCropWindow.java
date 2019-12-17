@@ -30,15 +30,14 @@ import java.util.function.Supplier;
 public class ImageCropWindow extends Screen {
     @Inject
     private VBoxLayout cropCmpCtn;
-    @Inject
-    private Image previewImage;
-    @Inject
-    private Button cancelBtn;
+//    @Inject
+//    private Image previewImage;
+
     private ImageCropWindowOptions options;
-    @Inject
-    private Label<String> fileSizeLabel;
-    @Inject
-    private LookupField qualityField;
+//    @Inject
+//    private Label<String> fileSizeLabel;
+//    @Inject
+//    private LookupField qualityField;
     private ImgCropServerComponent imgCrop;
     @Inject
     FileUploadingAPI fileUploadingAPI;
@@ -52,8 +51,8 @@ public class ImageCropWindow extends Screen {
             for (int i = 10; i >= 1; i--) {
                 list.add(i);
             }
-            qualityField.setOptionsList(list);
-            qualityField.setValue(this.options.getCropQuality());
+//            qualityField.setOptionsList(list);
+//            qualityField.setValue(this.options.getCropQuality());
 
         }
 
@@ -73,22 +72,23 @@ public class ImageCropWindow extends Screen {
                 this.options.getViewPort(),
                 this.options.getCropQuality()
                 );
+        // 将自定义js组件添加到页面
         cropCmpCtn.unwrap(Layout.class).addComponent(imgCrop);
-        imgCrop.setImageUpdateListener(imageBase64 -> {
-            if(imageBase64.contains(",")){
-                imageBase64=imageBase64.split(",")[1];
-            }
-            byte[] bytes = Base64.decodeBase64(imageBase64);
-            InputStream inputStream=new ByteArrayInputStream(bytes);
-            previewImage.setSource(StreamResource.class).setStreamSupplier(new Supplier<InputStream>() {
-                @Override
-                public InputStream get() {
-                    return inputStream;
-                }
-            });
-            fileSizeLabel.setValue(getDataSize(bytes.length));
-
-        });
+        // 绑定组件回调方法
+//        imgCrop.setImageUpdateListener(imageBase64 -> {
+//            if(imageBase64.contains(",")){
+//                imageBase64=imageBase64.split(",")[1];
+//            }
+//            byte[] bytes = Base64.decodeBase64(imageBase64);
+//            InputStream inputStream=new ByteArrayInputStream(bytes);
+//            previewImage.setSource(StreamResource.class).setStreamSupplier(new Supplier<InputStream>() {
+//                @Override
+//                public InputStream get() {
+//                    return inputStream;
+//                }
+//            });
+//            fileSizeLabel.setValue(getDataSize(bytes.length));
+//        });
     }
 
 
@@ -105,12 +105,12 @@ public class ImageCropWindow extends Screen {
         this.options.setResult(bytes);
         this.close(WINDOW_COMMIT_AND_CLOSE_ACTION);
     }
-    @Subscribe("qualityField")
-    public void onQualityFieldValueChange(HasValue.ValueChangeEvent event) {
-        if(imgCrop!=null){
-            imgCrop.setQuality(((Integer)event.getValue()).floatValue()/10f);
-        }
-    }
+//    @Subscribe("qualityField")
+//    public void onQualityFieldValueChange(HasValue.ValueChangeEvent event) {
+//        if(imgCrop!=null){
+//            imgCrop.setQuality(((Integer)event.getValue()).floatValue()/10f);
+//        }
+//    }
     @Subscribe("cancelBtn")
     public void onCancelBtnClick(Button.ClickEvent event) {
         this.close(WINDOW_DISCARD_AND_CLOSE_ACTION);

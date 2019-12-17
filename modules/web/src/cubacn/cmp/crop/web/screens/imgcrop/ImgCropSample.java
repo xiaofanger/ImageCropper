@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @UiController("cubacn_Imgcropsample")
 @UiDescriptor("ImgCropSample.xml")
-public class Imgcropsample extends Screen {
+public class ImgCropSample extends Screen {
     @Inject
     private VBoxLayout imgcropCtn;
 
@@ -54,6 +54,7 @@ public class Imgcropsample extends Screen {
             return;
         }
         ImageCropWindowOptions options=new ImageCropWindowOptions(file);
+
         ImageCropWindow.showAsDialog(this,options,(cropWindowAfterScreenCloseEvent)->{
             if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
                //close by  "Cancel" button

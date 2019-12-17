@@ -188,6 +188,7 @@ configure(webModule) {
 
     dependencies {
         compile 'org.webjars.bower:jrcarousel:1.0.0'
+        compile 'org.webjars.bower:croppie:2.6.3'
         compileOnly(servletApi)
         compile(globalModule)
     }
