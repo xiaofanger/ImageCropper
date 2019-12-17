@@ -166,18 +166,21 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         addFunction("imageUpdate", arguments -> {
             String imageBase64 = arguments.getString(0);
             currentImageBase64=imageBase64;
-//            if (imageUpdateListener != null) {
-//                imageUpdateListener.imageUpdate(imageBase64);
-//            }
+            if (imageUpdateListener != null) {
+                imageUpdateListener.imageUpdate(imageBase64);
+            }
         });
-//        addFunction("submitFunc", arguments -> {
-//            System.out.println(arguments.get(0));
-//        });
+        registerRpc(new ImgCropServerRpc() {
+            @Override
+            public void clicked(String imageBase64) {
+                currentImageBase64=imageBase64;
+                System.out.println(imageBase64);
+            }
+        });
     }
 
-    public String getUrl() {
-        String url = getState().imageBase64;
-        return url;
+    public void show() {
+        getRpcProxy(ImgCropClientRpc.class).gerImgUrl();
     }
 
     public static class ImgCropState extends JavaScriptComponentState {
@@ -191,6 +194,5 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         public boolean showZoomer;
         public ViewPort viewPort;
         public float quality = 1;
-
     }
 }

@@ -9,6 +9,7 @@ import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 import com.vaadin.ui.Layout;
+import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerRpc;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
@@ -30,8 +31,6 @@ import java.util.function.Supplier;
 public class ImageCropWindow extends Screen {
     @Inject
     private VBoxLayout cropCmpCtn;
-//    @Inject
-//    private Image previewImage;
 
     private ImageCropWindowOptions options;
 //    @Inject
@@ -100,11 +99,19 @@ public class ImageCropWindow extends Screen {
 
     @Subscribe("okBtn")
     public void onOkBtnClick(Button.ClickEvent event) {
-        String base64 = this.imgCrop.getCurrentImageBase64();
-        byte[] bytes = Base64.decodeBase64(base64);
-        this.options.setResult(bytes);
+        imgCrop.show();
+//        String base64 = this.imgCrop.getCurrentImageBase64();
+//        byte[] bytes = Base64.decodeBase64(base64);
+//        this.options.setResult(bytes);
         this.close(WINDOW_COMMIT_AND_CLOSE_ACTION);
     }
+
+    @Subscribe("settingsBtn")
+    public void onSettingsBtnClick(Button.ClickEvent event) {
+        imgCrop.show();
+    }
+
+
 //    @Subscribe("qualityField")
 //    public void onQualityFieldValueChange(HasValue.ValueChangeEvent event) {
 //        if(imgCrop!=null){

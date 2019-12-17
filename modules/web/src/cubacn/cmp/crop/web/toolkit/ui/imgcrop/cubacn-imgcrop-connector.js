@@ -1,8 +1,10 @@
 function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
     var connector = this;
     var element = connector.getElement();
+    var rpcProxy = connector.getRpcProxy();
     var croppie=null;
     var quality=1;
+    var imageBase64 = null;
 
     var preview = document.createElement('div');
     preview.setAttribute('class', 'cr-preview')
@@ -18,9 +20,17 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
             quality:quality,
             format:"jpeg"
         }).then(function (base64) {
-            me.imageUpdate(base64);
+            imageBase64 = base64
+            // me.imageUpdate(base64);
         })
     };
+
+    connector.registerRpc({
+        gerImgUrl: function () {
+            rpcProxy.clicked(imageBase64)
+        }
+    });
+
     connector.onStateChange = function() {
         var me=this;
         var opts={};
@@ -32,8 +42,7 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
                 customClass:state.customClass,
                 enableExif:state.enableExif,
                 enableOrientation:state.enableOrientation,
-                // enableResize:state.enableResize,
-                enableResize: true,
+                enableResize:state.enableResize,
                 enableZoom:state.enableZoom,
                 mouseWheelZoom:state.mouseWheelZoom,
                 showZoomer:state.showZoomer,

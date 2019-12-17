@@ -53,16 +53,18 @@ public class ImgCropSample extends Screen {
         if(file==null){
             return;
         }
-        ImageCropWindowOptions options=new ImageCropWindowOptions(file);
+        ImageCropWindowOptions options = new ImageCropWindowOptions(file);
 
-        ImageCropWindow.showAsDialog(this,options,(cropWindowAfterScreenCloseEvent)->{
+        ImageCropWindow.showAsDialog(this,options, (cropWindowAfterScreenCloseEvent)->{
             if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
                //close by  "Cancel" button
             }else if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
                 // close by "ok" button
                 byte[] result = options.getResult();
-                image.setSource(StreamResource.class)
-                        .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+                if (result != null) {
+                    image.setSource(StreamResource.class)
+                            .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+                }
             }
         });
     }
