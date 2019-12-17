@@ -10,7 +10,7 @@
         <param-value>
             classpath:cubacn/cmp/crop/web-app.properties
             /WEB-INF/local.app.properties
-            "file:${catalina.base}/conf/cubacnCmp-Crop/local.app.properties"
+            "file:${catalina.base}/conf/cubacnimgcrop/local.app.properties"
         </param-value>
     </context-param>
     <!--Application components-->

@@ -3,22 +3,22 @@
                dependsOn="com.haulmont.cuba">
 
     <module name="global" blocks="*">
-        <artifact name="cubacnCmp-Crop-global" appJar="true"/>
+        <artifact name="cubacnimgcrop-global" appJar="true"/>
 
         <property name="cuba.persistenceConfig" value="+cubacn/cmp/crop/persistence.xml"/>
         <property name="cuba.metadataConfig" value="+cubacn/cmp/crop/metadata.xml"/>
         <property name="cuba.viewsConfig" value="+cubacn/cmp/crop/views.xml"/>
     </module>
     <module name="core" dependsOn="global" blocks="core">
-        <artifact name="cubacnCmp-Crop-core" appJar="true"/>
-        <artifact name="cubacnCmp-Crop-core" classifier="db" ext="zip" configuration="dbscripts"/>
+        <artifact name="cubacnimgcrop-core" appJar="true"/>
+        <artifact name="cubacnimgcrop-core" classifier="db" ext="zip" configuration="dbscripts"/>
 
         <property name="cuba.springContextConfig" value="+cubacn/cmp/crop/spring.xml"/>
         <property name="cuba.mainMessagePack" value="+cubacn.cmp.crop.core"/>
     </module>
     <module name="web" dependsOn="global" blocks="web">
-        <artifact name="cubacnCmp-Crop-web" appJar="true"/>
-        <artifact name="cubacnCmp-Crop-web" classifier="web" ext="zip" configuration="webcontent"/>
+        <artifact name="cubacnimgcrop-web" appJar="true"/>
+        <artifact name="cubacnimgcrop-web" classifier="web" ext="zip" configuration="webcontent"/>
 
         <property name="cuba.springContextConfig" value="+cubacn/cmp/crop/web-spring.xml"/>
         <property name="cuba.dispatcherSpringContextConfig" value="+cubacn/cmp/crop/web-dispatcher-spring.xml"/>
