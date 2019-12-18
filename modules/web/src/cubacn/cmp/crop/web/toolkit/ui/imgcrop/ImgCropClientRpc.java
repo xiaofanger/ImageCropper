@@ -4,6 +4,6 @@ import com.vaadin.shared.communication.ClientRpc;
 
 public interface ImgCropClientRpc extends ClientRpc {
 
-    String gerImgUrl();
+    String gerImageCropResult();
 
 }

@@ -2,6 +2,5 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-cubacn" insertBefore="administration">
         <item screen="cubacn_ImgCropSample"/>
-        <item screen="cubacn_ImageCropSettingsWindow"/>
     </menu>
 </menu-config>

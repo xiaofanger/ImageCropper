@@ -23,7 +23,7 @@
         </vbox>
         <buttonsPanel id="toolbar" align="MIDDLE_RIGHT">
             <button id="settingsBtn" icon="GEAR" caption="msg://settingsText"/>
-            <button caption="msg://okText" id="okBtn" align="MIDDLE_CENTER"/>
+            <button caption="msg://okText" id="okBtn" align="MIDDLE_CENTER" stylename="primary"/>
             <button caption="msg://cancelText" id="cancelBtn" align="MIDDLE_CENTER"/>
         </buttonsPanel>
     </layout>

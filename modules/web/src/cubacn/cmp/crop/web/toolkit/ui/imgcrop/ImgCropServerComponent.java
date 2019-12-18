@@ -68,7 +68,7 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
 
 
     /**
-     * 调协剪裁质量
+     * 调整剪裁质量
      * @param quality 0-1
      */
     public void setQuality(float quality) {
@@ -178,8 +178,8 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         }
     }
 
-    public void show() {
-        getRpcProxy(ImgCropClientRpc.class).gerImgUrl();
+    public void gerImageCropResult() {
+        getRpcProxy(ImgCropClientRpc.class).gerImageCropResult();
     }
 
     public static class ImgCropState extends JavaScriptComponentState {

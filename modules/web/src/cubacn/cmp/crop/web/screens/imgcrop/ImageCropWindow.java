@@ -7,11 +7,14 @@ import com.haulmont.cuba.gui.builders.ScreenClassBuilder;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
+import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropResultUpdateRpc;
 import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 import com.vaadin.ui.Layout;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
 import javax.inject.Inject;
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -41,12 +44,6 @@ public class ImageCropWindow extends Screen {
         ScreenOptions options = event.getOptions();
         if(options instanceof ImageCropWindowOptions){
             this.options= (ImageCropWindowOptions)options;
-            List<Integer> list = new ArrayList<>();
-            for (int i = 10; i >= 1; i--) {
-                list.add(i);
-            }
-//            qualityField.setOptionsList(list);
-//            qualityField.setValue(this.options.getCropQuality());
         }
     }
 
@@ -63,11 +60,8 @@ public class ImageCropWindow extends Screen {
                 this.options.getImageFile(),
                 this.options.getViewPort(),
                 this.options.getCropQuality());
-        this.imgCrop.registerImgCropResultUpdateRpc(this.options.getImageResultUpdateListener());
         cropCmpCtn.unwrap(Layout.class).addComponent(imgCrop);
     }
-
-
 
     public static String getDataSize(long size){
         return FileUtils.byteCountToDisplaySize(size);
@@ -76,27 +70,45 @@ public class ImageCropWindow extends Screen {
 
     @Subscribe("okBtn")
     public void onOkBtnClick(Button.ClickEvent event) {
-        this.imgCrop.show();
-        this.close(WINDOW_COMMIT_AND_CLOSE_ACTION);
+        this.imgCrop.registerImgCropResultUpdateRpc((ImgCropResultUpdateRpc) base64 -> {
+            System.out.println(base64);
+            String file;
+            if(base64.contains(",")){
+                file = base64.split(",")[1];
+            } else {
+                file = base64;
+            }
+            byte[] result = Base64.decodeBase64(file);
+            options.setResult(result);
+            close(WINDOW_COMMIT_AND_CLOSE_ACTION);
+        });
+        this.imgCrop.gerImageCropResult();
     }
+
     @Subscribe("cancelBtn")
     public void onCancelBtnClick(Button.ClickEvent event) {
         this.close(WINDOW_DISCARD_AND_CLOSE_ACTION);
     }
     @Subscribe("settingsBtn")
     public void onSettingsBtnClick(Button.ClickEvent event) {
-        imgCrop.show();
+        ScreenBuilders screenBuilders = AppBeans.get(ScreenBuilders.class);
+        ImageCropSettingsWindow settingsWindow = screenBuilders.screen(this)
+                .withScreenClass(ImageCropSettingsWindow.class)
+                .withLaunchMode(OpenMode.DIALOG)
+                .withOptions(options)
+                .withAfterCloseListener((settingsWindowCloseEvent)->{
+                    if(settingsWindowCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
+                        //close by  "Cancel" button
+                    }else if(settingsWindowCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
+                        // close by "ok" button
+                        imgCrop.setQuality(new Integer(this.options.getCropQuality()).floatValue()/10f);
+                    }
+                })
+                .build();
+        settingsWindow.show();
     }
 
-
-//    @Subscribe("qualityField")
-//    public void onQualityFieldValueChange(HasValue.ValueChangeEvent event) {
-//        if(imgCrop!=null){
-//            imgCrop.setQuality(((Integer)event.getValue()).floatValue()/10f);
-//        }
-//    }
-
-    public static void showAsDialog(FrameOwner origin,ImageCropWindowOptions options,Consumer<AfterScreenCloseEvent<ImageCropWindow>> closeEventConsumer){
+    public static void showAsDialog(FrameOwner origin, ImageCropWindowOptions options, Consumer<AfterScreenCloseEvent<ImageCropWindow>> closeEventConsumer){
         ScreenBuilders screenBuilders = AppBeans.get(ScreenBuilders.class);
         ScreenClassBuilder<ImageCropWindow> screenBuilder = screenBuilders.screen(origin)
                 .withScreenClass(ImageCropWindow.class)
