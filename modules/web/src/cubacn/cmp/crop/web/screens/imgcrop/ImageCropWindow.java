@@ -6,7 +6,6 @@ import com.haulmont.cuba.gui.builders.AfterScreenCloseEvent;
 import com.haulmont.cuba.gui.builders.ScreenClassBuilder;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
-import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropResultUpdateRpc;
 import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 import com.vaadin.ui.Layout;
@@ -14,9 +13,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
 import javax.inject.Inject;
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 
@@ -31,13 +27,7 @@ public class ImageCropWindow extends Screen {
     private VBoxLayout cropCmpCtn;
 
     private ImageCropWindowOptions options;
-//    @Inject
-//    private Label<String> fileSizeLabel;
-//    @Inject
-//    private LookupField qualityField;
     private ImgCropServerComponent imgCrop;
-    @Inject
-    FileUploadingAPI fileUploadingAPI;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -71,7 +61,6 @@ public class ImageCropWindow extends Screen {
     @Subscribe("okBtn")
     public void onOkBtnClick(Button.ClickEvent event) {
         this.imgCrop.registerImgCropResultUpdateRpc((ImgCropResultUpdateRpc) base64 -> {
-            System.out.println(base64);
             String file;
             if(base64.contains(",")){
                 file = base64.split(",")[1];
@@ -87,7 +76,7 @@ public class ImageCropWindow extends Screen {
 
     @Subscribe("cancelBtn")
     public void onCancelBtnClick(Button.ClickEvent event) {
-        this.close(WINDOW_DISCARD_AND_CLOSE_ACTION);
+        this.closeWithDefaultAction();
     }
     @Subscribe("settingsBtn")
     public void onSettingsBtnClick(Button.ClickEvent event) {

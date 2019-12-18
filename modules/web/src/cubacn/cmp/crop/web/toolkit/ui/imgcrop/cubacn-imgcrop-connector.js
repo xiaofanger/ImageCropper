@@ -5,9 +5,14 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     var croppie = null;
     var quality = 1;
     var imageBase64 = null;
+
     // Create preview div element.
     var preview = document.createElement('div');
     preview.setAttribute('class', 'cr-preview')
+    var img = document.createElement('img');
+    img.setAttribute('src', '');
+    var sizeLabel = document.createElement('div');
+    sizeLabel.setAttribute('class', 'cr-preview-label');
 
     connector.doDestroy = function () {
         if (croppie != null) {
@@ -15,31 +20,33 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
         }
     };
     var me = this;
-    // Crop result listener
-    var updateF = function () {
+    /**
+     * Crop result callback.
+     * @param pw Preview element height
+     */
+    var updateF = function (pw) {
         croppie.result({
             type: 'base64',
             quality: quality,
             format: "jpeg"
         }).then(function (base64) {
-            imageBase64 = base64
+            var size = getImgSize(base64);
+            img.src = base64;
+            sizeLabel.innerText = size+'KB';
+            imageBase64 = base64;
         })
     };
-    // Preview
-    var previewF = function (pw) {
-        croppie.result({
-            type: 'rawcanvas',
-            quality: quality,
-            size: {
-                width: pw,
-                height: pw
-            }
-        }).then(function (canvas) {
-            preview.childNodes.forEach(function (item) {
-                item.remove()
-            });
-            preview.append(canvas)
-        })
+
+    /**
+     * Get image size.
+     * @param base64url
+     * @returns {string}
+     */
+    var getImgSize = function (base64url) {
+        var str = base64url.replace('data:image/jpeg;base64,', '');
+        var strLength = str.length;
+        var fileLength = parseInt(strLength - (strLength / 8) * 2);
+        return (fileLength / 1024).toFixed(2);
     };
 
     connector.registerRpc({
@@ -50,7 +57,6 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
 
     connector.onStateChange = function () {
         var me = this;
-        var ew, eh, pw;
         var opts = {};
         var state = connector.getState();
         quality = state.quality;
@@ -66,31 +72,31 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
                 showZoomer: state.showZoomer,
                 viewport: state.viewPort
             };
-
             var url = "data:image/jpeg;base64," + state.imageBase64;
             croppie = new Croppie(element, opts);
+
             // Add preview elements after setting the crop component
             // and set preview properties.
-            ew = element.offsetWidth;
-            eh = element.offsetHeight;
-            pw = ew * 0.26;
+            var ew = element.offsetWidth;
+            var eh = element.offsetHeight;
+            var pw = ew * 0.26;
             element.style.width = ew * 0.7 + 'px';
             preview.style.maxHeight = pw + 'px';
             preview.style.maxWidth = pw + 'px';
+            img.setAttribute('width', pw+'px');
+            img.setAttribute('height', pw+'px');
+            preview.appendChild(img);
+            preview.appendChild(sizeLabel);
             element.parentElement.appendChild(preview);
 
             element.addEventListener('update', function (ev) {
-                previewF(pw);
                 updateF();
             });
-
             croppie.bind({
                 url: url
             })
         } else {
-            croppie.elements.boundary.style.width = '70%';
-            croppie.elements.boundary.style.margin = '0';
-            previewF(pw);
+            croppie.element.style.width = '70%';
             updateF();
         }
 

@@ -3,5 +3,8 @@
     /*border: 1px solid #f00;*/
     top: 0;
     right: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
+}
+.cr-preview-label {
+    margin: 10px auto;
 }
