@@ -7,22 +7,31 @@
         <vbox id="rootCtn" spacing="true" expand="images">
             <hbox id="images" width="100%" margin="true" spacing="true">
                 <vbox id="cropCmpCtn" spacing="true" width="100%" height="100%"/>
-
-<!--                <vbox id="resultPreview" spacing="true" width="100%" height="100%" expand="previewImage"-->
-<!--                      visible="false">-->
-<!--                    <image id="previewImage" align="MIDDLE_CENTER" alternateText="剪裁预览"-->
-<!--                           width="100%" />-->
-<!--                    <buttonsPanel id="infoBar" align="MIDDLE_LEFT">-->
-<!--                        <label id="qualityFieldLabel" value="msg://quality" align="MIDDLE_LEFT">msg://quality</label>-->
-<!--                        <lookupField id="qualityField" width="70px" align="MIDDLE_LEFT" />-->
-<!--                        <label id="fileSizeLabel" align="MIDDLE_LEFT">大小:0KB</label>-->
-<!--                    </buttonsPanel>-->
-<!--                </vbox>-->
             </hbox>
-
+            <groupBox spacing="true" outerMargin="true" caption="msg://settingsText" width="100%">
+                <form width="100%">
+                    <column>
+                        <lookupField id="viewportField" caption="msg://viewport" width="80px" editable="false"
+                        />
+                    </column>
+                    <column>
+                        <buttonsPanel>
+                            <label value="msg://dimension" align="MIDDLE_CENTER"/>
+                            <textField id="widthField" width="60px" align="MIDDLE_CENTER"
+                                       datatype="int" editable="false"/>
+                            <label value="x" align="MIDDLE_CENTER"/>
+                            <textField id="heightField" width="60px" align="MIDDLE_CENTER"
+                                       datatype="int" editable="false"/>
+                        </buttonsPanel>
+                    </column>
+                    <column>
+                        <lookupField id="qualityField" width="80px" align="MIDDLE_LEFT" caption="msg://quality"
+                        />
+                    </column>
+                </form>
+            </groupBox>
         </vbox>
         <buttonsPanel id="toolbar" align="MIDDLE_RIGHT">
-            <button id="settingsBtn" icon="GEAR" caption="msg://settingsText"/>
             <button caption="msg://okText" id="okBtn" align="MIDDLE_CENTER" stylename="primary"/>
             <button caption="msg://cancelText" id="cancelBtn" align="MIDDLE_CENTER"/>
         </buttonsPanel>

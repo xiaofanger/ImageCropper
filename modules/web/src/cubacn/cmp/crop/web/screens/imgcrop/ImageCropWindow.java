@@ -13,6 +13,10 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 
@@ -25,6 +29,14 @@ import java.util.function.Consumer;
 public class ImageCropWindow extends Screen {
     @Inject
     private VBoxLayout cropCmpCtn;
+    @Inject
+    private TextField<Integer> heightField;
+    @Inject
+    private TextField<Integer> widthField;
+    @Inject
+    private LookupField<String> viewportField;
+    @Inject
+    private LookupField<Integer> qualityField;
 
     private ImageCropWindowOptions options;
     private ImgCropServerComponent imgCrop;
@@ -34,6 +46,21 @@ public class ImageCropWindow extends Screen {
         ScreenOptions options = event.getOptions();
         if(options instanceof ImageCropWindowOptions){
             this.options= (ImageCropWindowOptions)options;
+        }
+        List<Integer> qualityOptions = new ArrayList<>();
+        for (int i = 10; i >= 1; i--) {
+            qualityOptions.add(i);
+        }
+        qualityField.setOptionsList(qualityOptions);
+        Map<String, String> viewportOptions = new HashMap<>();
+        viewportOptions.put("矩形", "square");
+        viewportOptions.put("圆形", "circle");
+        viewportField.setOptionsMap(viewportOptions);
+        if (this.options != null) {
+            qualityField.setValue(this.options.getCropQuality());
+            viewportField.setValue(this.options.getViewPort().viewPortType.toString());
+            widthField.setValue(this.options.getViewPort().width);
+            heightField.setValue(this.options.getViewPort().height);
         }
     }
 
@@ -78,26 +105,19 @@ public class ImageCropWindow extends Screen {
     public void onCancelBtnClick(Button.ClickEvent event) {
         this.closeWithDefaultAction();
     }
-    @Subscribe("settingsBtn")
-    public void onSettingsBtnClick(Button.ClickEvent event) {
-        ScreenBuilders screenBuilders = AppBeans.get(ScreenBuilders.class);
-        ImageCropSettingsWindow settingsWindow = screenBuilders.screen(this)
-                .withScreenClass(ImageCropSettingsWindow.class)
-                .withLaunchMode(OpenMode.DIALOG)
-                .withOptions(options)
-                .withAfterCloseListener((settingsWindowCloseEvent)->{
-                    if(settingsWindowCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
-                        //close by  "Cancel" button
-                    }else if(settingsWindowCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
-                        // close by "ok" button
-                        imgCrop.setQuality(new Integer(this.options.getCropQuality()).floatValue()/10f);
-                    }
-                })
-                .build();
-        settingsWindow.show();
+
+    @Subscribe("qualityField")
+    public void onQualityFieldValueChange(HasValue.ValueChangeEvent event) {
+        if (options != null) {
+            options.setCropQuality((Integer) event.getValue());
+            if(imgCrop!=null){
+                imgCrop.setQuality(((Integer)event.getValue()).floatValue()/10f);
+            }
+        }
     }
 
-    public static void showAsDialog(FrameOwner origin, ImageCropWindowOptions options, Consumer<AfterScreenCloseEvent<ImageCropWindow>> closeEventConsumer){
+    public static void showAsDialog(FrameOwner origin, ImageCropWindowOptions options,
+                                    Consumer<AfterScreenCloseEvent<ImageCropWindow>> closeEventConsumer){
         ScreenBuilders screenBuilders = AppBeans.get(ScreenBuilders.class);
         ScreenClassBuilder<ImageCropWindow> screenBuilder = screenBuilders.screen(origin)
                 .withScreenClass(ImageCropWindow.class)

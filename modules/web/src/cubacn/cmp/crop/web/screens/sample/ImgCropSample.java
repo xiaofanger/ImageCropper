@@ -9,6 +9,7 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import cubacn.cmp.crop.web.screens.imgcrop.ImageCropWindow;
 import cubacn.cmp.crop.web.screens.imgcrop.ImageCropWindowOptions;
+import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 
 import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
@@ -47,7 +48,9 @@ public class ImgCropSample extends Screen {
         if(file==null){
             return;
         }
-        ImageCropWindowOptions options = new ImageCropWindowOptions(file);
+        ImgCropServerComponent.ViewPort viewPort = new ImgCropServerComponent.ViewPort(200, 100,
+                ImgCropServerComponent.ViewPortType.square);
+        ImageCropWindowOptions options = new ImageCropWindowOptions(file, 10, viewPort);
         ImageCropWindow.showAsDialog(this, options, (cropWindowAfterScreenCloseEvent)->{
             if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
                //close by  "Cancel" button

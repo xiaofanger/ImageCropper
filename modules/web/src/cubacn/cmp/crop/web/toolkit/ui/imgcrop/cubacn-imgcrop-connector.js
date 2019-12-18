@@ -10,6 +10,7 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     var preview = document.createElement('div');
     preview.setAttribute('class', 'cr-preview')
     var img = document.createElement('img');
+    img.setAttribute('class', 'cr-preview-img');
     img.setAttribute('src', '');
     var sizeLabel = document.createElement('div');
     sizeLabel.setAttribute('class', 'cr-preview-label');
@@ -49,6 +50,34 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
         return (fileLength / 1024).toFixed(2);
     };
 
+
+    /**
+     * Initialize custom element attribute.
+     * @param state
+     * @param ew
+     * @param eh
+     * @param pw
+     */
+    var setElementAttr = function (state, ew, eh, pw) {
+        // Add preview elements after setting the crop component
+        // and set preview properties.
+        ew = element.offsetWidth;
+        eh = element.offsetHeight;
+        pw = ew * 0.46;
+        element.style.width = ew * 0.5 + 'px';
+        preview.style.height = pw + 'px';
+        preview.style.width = pw + 'px';
+        preview.style.maxHeight = pw + 'px';
+        preview.style.maxWidth = pw + 'px';
+        preview.appendChild(img);
+        element.parentElement.appendChild(preview);
+        element.parentElement.appendChild(sizeLabel);
+        sizeLabel.style.top = pw + 'px';
+        sizeLabel.style.left = preview.offsetLeft + 'px';
+        img.style.left = (pw - state.viewPort.width)/2 + 'px';
+        img.style.top = (pw - state.viewPort.height)/2 + 'px';
+    }
+
     connector.registerRpc({
         gerImageCropResult: function () {
             rpcProxy.resultUpdate(imageBase64)
@@ -58,6 +87,7 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     connector.onStateChange = function () {
         var me = this;
         var opts = {};
+        var ew, eh, pw;
         var state = connector.getState();
         quality = state.quality;
         quality = parseFloat(quality.toFixed(1));
@@ -74,20 +104,7 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
             };
             var url = "data:image/jpeg;base64," + state.imageBase64;
             croppie = new Croppie(element, opts);
-
-            // Add preview elements after setting the crop component
-            // and set preview properties.
-            var ew = element.offsetWidth;
-            var eh = element.offsetHeight;
-            var pw = ew * 0.26;
-            element.style.width = ew * 0.7 + 'px';
-            preview.style.maxHeight = pw + 'px';
-            preview.style.maxWidth = pw + 'px';
-            img.setAttribute('width', pw+'px');
-            img.setAttribute('height', pw+'px');
-            preview.appendChild(img);
-            preview.appendChild(sizeLabel);
-            element.parentElement.appendChild(preview);
+            setElementAttr(state);
 
             element.addEventListener('update', function (ev) {
                 updateF();
@@ -96,7 +113,10 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
                 url: url
             })
         } else {
-            croppie.element.style.width = '70%';
+            // Reset element attribute.
+            croppie.element.style.width = '50%';
+            img.style.left = (pw - state.viewPort.width)/2 + 'px';
+            img.style.top = (pw - state.viewPort.height)/2 + 'px';
             updateF();
         }
 
