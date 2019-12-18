@@ -9,17 +9,12 @@ import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
 import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 import com.vaadin.ui.Layout;
-import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerRpc;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 
 import javax.inject.Inject;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 
 /**
@@ -52,11 +47,9 @@ public class ImageCropWindow extends Screen {
             }
 //            qualityField.setOptionsList(list);
 //            qualityField.setValue(this.options.getCropQuality());
-
         }
-
-
     }
+
     @Inject
     private Button okBtn;
     @Inject
@@ -69,25 +62,9 @@ public class ImageCropWindow extends Screen {
         this.imgCrop = new ImgCropServerComponent(
                 this.options.getImageFile(),
                 this.options.getViewPort(),
-                this.options.getCropQuality()
-                );
-        // 将自定义js组件添加到页面
+                this.options.getCropQuality());
+        this.imgCrop.registerImgCropResultUpdateRpc(this.options.getImageResultUpdateListener());
         cropCmpCtn.unwrap(Layout.class).addComponent(imgCrop);
-        // 绑定组件回调方法
-//        imgCrop.setImageUpdateListener(imageBase64 -> {
-//            if(imageBase64.contains(",")){
-//                imageBase64=imageBase64.split(",")[1];
-//            }
-//            byte[] bytes = Base64.decodeBase64(imageBase64);
-//            InputStream inputStream=new ByteArrayInputStream(bytes);
-//            previewImage.setSource(StreamResource.class).setStreamSupplier(new Supplier<InputStream>() {
-//                @Override
-//                public InputStream get() {
-//                    return inputStream;
-//                }
-//            });
-//            fileSizeLabel.setValue(getDataSize(bytes.length));
-//        });
     }
 
 
@@ -99,13 +76,13 @@ public class ImageCropWindow extends Screen {
 
     @Subscribe("okBtn")
     public void onOkBtnClick(Button.ClickEvent event) {
-        imgCrop.show();
-//        String base64 = this.imgCrop.getCurrentImageBase64();
-//        byte[] bytes = Base64.decodeBase64(base64);
-//        this.options.setResult(bytes);
+        this.imgCrop.show();
         this.close(WINDOW_COMMIT_AND_CLOSE_ACTION);
     }
-
+    @Subscribe("cancelBtn")
+    public void onCancelBtnClick(Button.ClickEvent event) {
+        this.close(WINDOW_DISCARD_AND_CLOSE_ACTION);
+    }
     @Subscribe("settingsBtn")
     public void onSettingsBtnClick(Button.ClickEvent event) {
         imgCrop.show();
@@ -118,10 +95,7 @@ public class ImageCropWindow extends Screen {
 //            imgCrop.setQuality(((Integer)event.getValue()).floatValue()/10f);
 //        }
 //    }
-    @Subscribe("cancelBtn")
-    public void onCancelBtnClick(Button.ClickEvent event) {
-        this.close(WINDOW_DISCARD_AND_CLOSE_ACTION);
-    }
+
     public static void showAsDialog(FrameOwner origin,ImageCropWindowOptions options,Consumer<AfterScreenCloseEvent<ImageCropWindow>> closeEventConsumer){
         ScreenBuilders screenBuilders = AppBeans.get(ScreenBuilders.class);
         ScreenClassBuilder<ImageCropWindow> screenBuilder = screenBuilders.screen(origin)

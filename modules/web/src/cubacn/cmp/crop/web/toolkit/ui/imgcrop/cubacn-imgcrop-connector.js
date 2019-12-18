@@ -1,56 +1,73 @@
-function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
+function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     var connector = this;
     var element = connector.getElement();
     var rpcProxy = connector.getRpcProxy();
-    var croppie=null;
-    var quality=1;
+    var croppie = null;
+    var quality = 1;
     var imageBase64 = null;
 
     var preview = document.createElement('div');
     preview.setAttribute('class', 'cr-preview')
 
-    connector.doDestroy=function(){
-        if(croppie!=null){
+    connector.doDestroy = function () {
+        if (croppie != null) {
             destroy();
         }
     };
-    var me=this;
-    var updateF=function(){
+    var me = this;
+    // Crop result listener
+    var updateF = function () {
         croppie.result({
-            quality:quality,
-            format:"jpeg"
+            type: 'base64',
+            quality: quality,
+            format: "jpeg"
         }).then(function (base64) {
             imageBase64 = base64
-            // me.imageUpdate(base64);
+        })
+    };
+    // Preview
+    var previewF = function (pw) {
+        croppie.result({
+            type: 'rawcanvas',
+            quality: quality,
+            size: {
+                width: pw,
+                height: pw
+            }
+        }).then(function (canvas) {
+            preview.childNodes.forEach(function (item) {
+                item.remove()
+            });
+            preview.append(canvas)
         })
     };
 
     connector.registerRpc({
         gerImgUrl: function () {
-            rpcProxy.clicked(imageBase64)
+            rpcProxy.resultUpdate(imageBase64)
         }
     });
 
-    connector.onStateChange = function() {
-        var me=this;
-        var opts={};
+    connector.onStateChange = function () {
+        var me = this;
+        var opts = {};
         var state = connector.getState();
-        quality=state.quality;
-        quality=parseFloat(quality.toFixed(1));
-        if(croppie==null){
-            opts={
-                customClass:state.customClass,
-                enableExif:state.enableExif,
-                enableOrientation:state.enableOrientation,
-                enableResize:state.enableResize,
-                enableZoom:state.enableZoom,
-                mouseWheelZoom:state.mouseWheelZoom,
-                showZoomer:state.showZoomer,
-                viewport:state.viewPort
+        quality = state.quality;
+        quality = parseFloat(quality.toFixed(1));
+        if (croppie == null) {
+            opts = {
+                customClass: state.customClass,
+                enableExif: state.enableExif,
+                enableOrientation: state.enableOrientation,
+                enableResize: state.enableResize,
+                enableZoom: state.enableZoom,
+                mouseWheelZoom: state.mouseWheelZoom,
+                showZoomer: state.showZoomer,
+                viewport: state.viewPort
             };
 
-            var url="data:image/jpeg;base64,"+state.imageBase64;
-            croppie=new Croppie(element, opts);
+            var url = "data:image/jpeg;base64," + state.imageBase64;
+            croppie = new Croppie(element, opts);
 
             var ew = element.offsetWidth;
             var eh = element.offsetHeight;
@@ -60,28 +77,17 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
             preview.style.maxWidth = pw + 'px';
             element.parentElement.appendChild(preview);
 
-            element.addEventListener('update', function(ev) {
-                updateF()
-                croppie.result({
-                    type: 'rawcanvas',
-                    quality:quality,
-                    size: {
-                        width: pw,
-                        height: pw
-                    }
-                }).then(function (canvas) {
-                    preview.childNodes.forEach(function(item) {item.remove()});
-                    preview.append(canvas)
-                })
+            element.addEventListener('update', function (ev) {
+                updateF();
+                previewF(pw);
             });
 
             croppie.bind({
-                url:url
+                url: url
             })
-        }else {
+        } else {
             updateF();
         }
-
 
     }
 }

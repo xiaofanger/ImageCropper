@@ -61,7 +61,7 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         this(imageFileDescriptor, "", false, false, false, true, true, true, viewPort,1);
     }
 
-    public ImgCropServerComponent(File imageFileDescriptor, ViewPort viewPort,int quality
+    public ImgCropServerComponent(File imageFileDescriptor, ViewPort viewPort, int quality
     ) {
         this(imageFileDescriptor, "", false, false, false, true, true, true, viewPort,quality);
     }
@@ -170,13 +170,12 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
                 imageUpdateListener.imageUpdate(imageBase64);
             }
         });
-        registerRpc(new ImgCropServerRpc() {
-            @Override
-            public void clicked(String imageBase64) {
-                currentImageBase64=imageBase64;
-                System.out.println(imageBase64);
-            }
-        });
+    }
+
+    public void registerImgCropResultUpdateRpc(ImgCropResultUpdateRpc imgCropResultUpdateRpc) {
+        if (imgCropResultUpdateRpc != null) {
+            registerRpc(imgCropResultUpdateRpc);
+        }
     }
 
     public void show() {

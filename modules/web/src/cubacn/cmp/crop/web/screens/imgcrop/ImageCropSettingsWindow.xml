@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="cubacn.cmp.crop.web.screens.imgcrop">
+    <dialogMode forceDialog="true" width="400" height="300"/>
+    <layout>
+        <vbox spacing="true" height="100%">
+            <buttonsPanel align="BOTTOM_RIGHT">
+                <button id="okBtn" caption="msg://okText"/>
+                <button id="cancelBtn" caption="msg://cancelText"/>
+            </buttonsPanel>
+        </vbox>
+    </layout>
+</window>

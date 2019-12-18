@@ -1,7 +1,9 @@
 package cubacn.cmp.crop.web.screens.imgcrop;
 
 import com.haulmont.cuba.gui.screen.ScreenOptions;
+import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropResultUpdateRpc;
 import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.File;
 
@@ -13,6 +15,7 @@ public class ImageCropWindowOptions implements ScreenOptions {
     private int cropQuality=10;
     private byte[] result;
     private ImgCropServerComponent.ViewPort viewPort;
+    private ImgCropResultUpdateRpc imageResultUpdateListener;
 
     public ImageCropWindowOptions(File file){
         this(file,10,new ImgCropServerComponent.ViewPort());
@@ -31,6 +34,7 @@ public class ImageCropWindowOptions implements ScreenOptions {
         this.imageFile=file;
         this.cropQuality=cropQuality;
         this.viewPort=viewPort;
+        this.setDefaultImageResultUpdateListener();
     }
     private File imageFile;
     public File getImageFile() {
@@ -50,5 +54,26 @@ public class ImageCropWindowOptions implements ScreenOptions {
 
     public ImgCropServerComponent.ViewPort getViewPort() {
         return viewPort;
+    }
+
+    public ImgCropResultUpdateRpc getImageResultUpdateListener() {
+        return imageResultUpdateListener;
+    }
+
+    public void setImageResultUpdateListener(ImgCropResultUpdateRpc imageResultUpdateListener) {
+        this.imageResultUpdateListener = imageResultUpdateListener;
+    }
+
+    private void setDefaultImageResultUpdateListener() {
+        this.imageResultUpdateListener = (ImgCropResultUpdateRpc) base64 -> {
+            System.out.println(base64);
+            String res;
+            if(base64.contains(",")){
+                res = base64.split(",")[1];
+            } else {
+                res = base64;
+            }
+            result = Base64.decodeBase64(res);
+        };
     }
 }

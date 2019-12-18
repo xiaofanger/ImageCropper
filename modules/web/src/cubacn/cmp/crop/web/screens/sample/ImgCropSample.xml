@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://caption"
-        messagesPack="cubacn.cmp.web.screens.imgcrop">
+        messagesPack="cubacn.cmp.crop.web.screens.sample">
     <layout>
         <vbox spacing="true">
             <image width="200px" height="200px" id="image" scaleMode="CONTAIN">
             </image>
             <hbox>
-                <upload id="uploadField" />
-                <button id="cropBtn" caption="msg://crop" />
+                <upload id="uploadField" uploadButtonIcon="UPLOAD" uploadButtonCaption="msg://upload"/>
+                <button id="cropBtn" caption="msg://crop" icon="CROP"/>
             </hbox>
-            <vbox id="imgcropCtn">
-            </vbox>
         </vbox>
     </layout>
 </window>
