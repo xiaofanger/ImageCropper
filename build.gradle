@@ -55,8 +55,8 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'cubacn.cmp.crop'
-        version = '0.1'
-        isSnapshot = true
+        version = '1.0.0'
+        isSnapshot = false
     }
 
     uploadRepository {
