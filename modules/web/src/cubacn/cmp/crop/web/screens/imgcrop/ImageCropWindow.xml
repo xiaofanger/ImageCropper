@@ -2,26 +2,31 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://caption"
         messagesPack="cubacn.cmp.crop.web.screens.imgcrop">
-    <dialogMode width="800px" height="400px" forceDialog="true" resizable="true"/>
+    <dialogMode width="800px" height="400px" forceDialog="true"/>
     <layout expand="rootCtn">
         <vbox id="rootCtn" spacing="true" expand="images">
             <hbox id="images" width="100%" margin="true" spacing="true">
                 <vbox id="cropCmpCtn" spacing="true" width="100%" height="100%"/>
             </hbox>
-            <groupBox spacing="true" outerMargin="true" caption="msg://settingsText" width="100%">
+            <groupBox spacing="true" outerMargin="true" caption="msg://settingsText" width="100%" align="TOP_CENTER">
                 <form width="100%">
                     <column>
-                        <lookupField id="viewportField" caption="msg://viewport" width="80px" editable="false"
-                        />
+<!--                        <lookupField id="viewportField" caption="msg://viewport" width="80px" editable="false"-->
+<!--                                     visible="false"/>-->
+                        <buttonsPanel>
+                            <label value="msg://viewport" align="MIDDLE_CENTER"/>
+                            <label id="viewportLabel" align="MIDDLE_CENTER"/>
+                        </buttonsPanel>
                     </column>
                     <column>
                         <buttonsPanel>
                             <label value="msg://dimension" align="MIDDLE_CENTER"/>
                             <textField id="widthField" width="60px" align="MIDDLE_CENTER"
-                                       datatype="int" editable="false"/>
-                            <label value="x" align="MIDDLE_CENTER"/>
+                                       datatype="int" editable="false" visible="false"/>
+                            <label value="x" align="MIDDLE_CENTER" visible="false"/>
                             <textField id="heightField" width="60px" align="MIDDLE_CENTER"
-                                       datatype="int" editable="false"/>
+                                       datatype="int" editable="false" visible="false"/>
+                            <label id="label" align="MIDDLE_CENTER"/>
                         </buttonsPanel>
                     </column>
                     <column>

@@ -34,12 +34,16 @@ public class ImageCropWindow extends Screen {
     @Inject
     private TextField<Integer> widthField;
     @Inject
-    private LookupField<String> viewportField;
+    private Label<String> label;
+//    @Inject
+//    private LookupField<String> viewportField;
     @Inject
     private LookupField<Integer> qualityField;
 
     private ImageCropWindowOptions options;
     private ImgCropServerComponent imgCrop;
+    @Inject
+    private Label<String> viewportLabel;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -55,12 +59,14 @@ public class ImageCropWindow extends Screen {
         Map<String, String> viewportOptions = new HashMap<>();
         viewportOptions.put("矩形", "square");
         viewportOptions.put("圆形", "circle");
-        viewportField.setOptionsMap(viewportOptions);
+//        viewportField.setOptionsMap(viewportOptions);
         if (this.options != null) {
             qualityField.setValue(this.options.getCropQuality());
-            viewportField.setValue(this.options.getViewPort().viewPortType.toString());
+//            viewportField.setValue(this.options.getViewPort().viewPortType.toString());
             widthField.setValue(this.options.getViewPort().width);
             heightField.setValue(this.options.getViewPort().height);
+            label.setValue(this.options.getViewPort().width + " * " + this.options.getViewPort().height);
+            viewportLabel.setValue(this.options.getViewPort().viewPortType.toString());
         }
     }
 
