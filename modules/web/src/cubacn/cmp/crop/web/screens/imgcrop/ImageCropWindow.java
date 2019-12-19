@@ -14,9 +14,7 @@ import org.apache.commons.io.FileUtils;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 
@@ -30,13 +28,7 @@ public class ImageCropWindow extends Screen {
     @Inject
     private VBoxLayout cropCmpCtn;
     @Inject
-    private TextField<Integer> heightField;
-    @Inject
-    private TextField<Integer> widthField;
-    @Inject
     private Label<String> label;
-//    @Inject
-//    private LookupField<String> viewportField;
     @Inject
     private LookupField<Integer> qualityField;
 
@@ -56,26 +48,12 @@ public class ImageCropWindow extends Screen {
             qualityOptions.add(i);
         }
         qualityField.setOptionsList(qualityOptions);
-        Map<String, String> viewportOptions = new HashMap<>();
-        viewportOptions.put("矩形", "square");
-        viewportOptions.put("圆形", "circle");
-//        viewportField.setOptionsMap(viewportOptions);
         if (this.options != null) {
             qualityField.setValue(this.options.getCropQuality());
-//            viewportField.setValue(this.options.getViewPort().viewPortType.toString());
-            widthField.setValue(this.options.getViewPort().width);
-            heightField.setValue(this.options.getViewPort().height);
             label.setValue(this.options.getViewPort().width + " * " + this.options.getViewPort().height);
             viewportLabel.setValue(this.options.getViewPort().viewPortType.toString());
         }
     }
-
-    @Inject
-    private Button okBtn;
-    @Inject
-    private ButtonsPanel toolbar;
-    @Inject
-    private VBoxLayout rootCtn;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {

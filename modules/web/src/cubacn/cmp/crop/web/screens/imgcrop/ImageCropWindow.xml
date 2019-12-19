@@ -11,8 +11,6 @@
             <groupBox spacing="true" outerMargin="true" caption="msg://settingsText" width="100%" align="TOP_CENTER">
                 <form width="100%">
                     <column>
-<!--                        <lookupField id="viewportField" caption="msg://viewport" width="80px" editable="false"-->
-<!--                                     visible="false"/>-->
                         <buttonsPanel>
                             <label value="msg://viewport" align="MIDDLE_CENTER"/>
                             <label id="viewportLabel" align="MIDDLE_CENTER"/>
@@ -21,17 +19,11 @@
                     <column>
                         <buttonsPanel>
                             <label value="msg://dimension" align="MIDDLE_CENTER"/>
-                            <textField id="widthField" width="60px" align="MIDDLE_CENTER"
-                                       datatype="int" editable="false" visible="false"/>
-                            <label value="x" align="MIDDLE_CENTER" visible="false"/>
-                            <textField id="heightField" width="60px" align="MIDDLE_CENTER"
-                                       datatype="int" editable="false" visible="false"/>
                             <label id="label" align="MIDDLE_CENTER"/>
                         </buttonsPanel>
                     </column>
                     <column>
-                        <lookupField id="qualityField" width="80px" align="MIDDLE_LEFT" caption="msg://quality"
-                        />
+                        <lookupField id="qualityField" width="80px" align="MIDDLE_LEFT" caption="msg://quality"/>
                     </column>
                 </form>
             </groupBox>
