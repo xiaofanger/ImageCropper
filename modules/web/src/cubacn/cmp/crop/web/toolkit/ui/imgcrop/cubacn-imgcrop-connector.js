@@ -5,7 +5,10 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     var croppie = null;
     var quality = 1;
     var imageBase64 = null;
-
+    var  formatNum =function(num) {
+        var reg=/\d{1,3}(?=(\d{3})+$)/g;
+        return (num + '').replace(reg, '$&,');
+    }
     // Create preview div element.
     var preview = document.createElement('div');
     preview.setAttribute('class', 'cr-preview')
@@ -39,7 +42,7 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
                 format: "jpeg"
             }).then(function (blob) {
                 size=blob.size;
-                sizeLabel.innerText = size+' bytes';
+                sizeLabel.innerText = formatNum(size)+' bytes';
             });
         })
     };
