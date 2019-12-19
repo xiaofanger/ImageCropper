@@ -31,10 +31,16 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
             quality: quality,
             format: "jpeg"
         }).then(function (base64) {
-            var size = getImgSize(base64);
             img.src = base64;
-            sizeLabel.innerText = size+'KB';
             imageBase64 = base64;
+            croppie.result({
+                type: 'blob',
+                quality: quality,
+                format: "jpeg"
+            }).then(function (blob) {
+                size=blob.size;
+                sizeLabel.innerText = size+' bytes';
+            });
         })
     };
 
@@ -59,7 +65,7 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
      * @param pw
      */
     var setElementAttr = function (state, ew, eh, pw) {
-        // Add preview elements after setting the crop component
+        // Add preview elements after setting the cropping component
         // and set preview properties.
         ew = element.offsetWidth;
         eh = element.offsetHeight;
