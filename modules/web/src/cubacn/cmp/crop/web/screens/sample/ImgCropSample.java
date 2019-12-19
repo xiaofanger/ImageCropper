@@ -48,9 +48,11 @@ public class ImgCropSample extends Screen {
         if(file==null){
             return;
         }
-        ImgCropServerComponent.ViewPort viewPort = new ImgCropServerComponent.ViewPort(200, 100,
+        ImgCropServerComponent.ViewPort viewPort =
+                new ImgCropServerComponent.ViewPort(200, 100,
                 ImgCropServerComponent.ViewPortType.square);
         ImageCropWindowOptions options = new ImageCropWindowOptions(file, 10, viewPort);
+
         ImageCropWindow.showAsDialog(this, options, (cropWindowAfterScreenCloseEvent)->{
             if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
                //close by  "Cancel" button
