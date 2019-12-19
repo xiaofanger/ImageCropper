@@ -1,13 +1,15 @@
-package cubacn.cmp.crop.web.screens.imgcrop;
+package cubacn.cmp.crop.web.screens.sample;
 
-import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
-import com.haulmont.cuba.gui.ScreenBuilders;
-import com.haulmont.cuba.gui.Screens;
 import com.haulmont.cuba.gui.components.*;
-import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.screen.Screen;
+import com.haulmont.cuba.gui.screen.Subscribe;
+import com.haulmont.cuba.gui.screen.UiController;
+import com.haulmont.cuba.gui.screen.UiDescriptor;
 import com.haulmont.cuba.gui.upload.FileUploadingAPI;
+import cubacn.cmp.crop.web.screens.imgcrop.ImageCropWindow;
+import cubacn.cmp.crop.web.screens.imgcrop.ImageCropWindowOptions;
+import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 
 import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
@@ -19,11 +21,9 @@ import java.util.UUID;
  * Created by Ray.Lv on 2019/10/21.
  */
 
-@UiController("cubacn_Imgcropsample")
+@UiController("cubacn_ImgCropSample")
 @UiDescriptor("ImgCropSample.xml")
-public class Imgcropsample extends Screen {
-    @Inject
-    private VBoxLayout imgcropCtn;
+public class ImgCropSample extends Screen {
 
     @Inject
     private Image image;
@@ -32,18 +32,13 @@ public class Imgcropsample extends Screen {
     @Inject
     private FileUploadingAPI fileUploadingAPI;
     @Inject
-    private DataManager dataManager;
-    @Inject
-    Screens screens;
-    @Inject
-    private ScreenBuilders screenBuilders;
-    @Inject
     private Notifications notifications;
     @Inject
-    private Dialogs dialogs;
+    private Button cropBtn;
+
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
-
+        cropBtn.setEnabled(false);
     }
 
     @Subscribe("cropBtn")
@@ -53,15 +48,19 @@ public class Imgcropsample extends Screen {
         if(file==null){
             return;
         }
-        ImageCropWindowOptions options=new ImageCropWindowOptions(file);
-        ImageCropWindow.showAsDialog(this,options,(cropWindowAfterScreenCloseEvent)->{
+        ImgCropServerComponent.ViewPort viewPort = new ImgCropServerComponent.ViewPort(200, 100,
+                ImgCropServerComponent.ViewPortType.square);
+        ImageCropWindowOptions options = new ImageCropWindowOptions(file, 10, viewPort);
+        ImageCropWindow.showAsDialog(this, options, (cropWindowAfterScreenCloseEvent)->{
             if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
                //close by  "Cancel" button
             }else if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
                 // close by "ok" button
                 byte[] result = options.getResult();
-                image.setSource(StreamResource.class)
-                        .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+                if (result != null) {
+                    image.setSource(StreamResource.class)
+                            .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+                }
             }
         });
     }
@@ -75,6 +74,7 @@ public class Imgcropsample extends Screen {
                     .withDescription("文件已经上传至临时存储，点击[剪裁]按钮对图片进行剪裁" + file.getAbsolutePath())
                     .show();
             image.setSource(FileResource.class).setFile(file);
+            cropBtn.setEnabled(true);
         }
     }
 }

@@ -61,14 +61,14 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         this(imageFileDescriptor, "", false, false, false, true, true, true, viewPort,1);
     }
 
-    public ImgCropServerComponent(File imageFileDescriptor, ViewPort viewPort,int quality
+    public ImgCropServerComponent(File imageFileDescriptor, ViewPort viewPort, int quality
     ) {
         this(imageFileDescriptor, "", false, false, false, true, true, true, viewPort,quality);
     }
 
 
     /**
-     * 调协剪裁质量
+     * 调整剪裁质量
      * @param quality 0-1
      */
     public void setQuality(float quality) {
@@ -149,16 +149,19 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
     }
 
     private ImageUpdateListener imageUpdateListener;
+
     public String getCurrentImageBase64(){
         if(currentImageBase64==null){
            return  currentImageBase64;
         }
-        if(currentImageBase64.indexOf(",")>-1){
+        if(currentImageBase64.contains(",")){
             return currentImageBase64.split(",")[1];
         }
         return currentImageBase64;
     }
+
     String currentImageBase64;
+
     public ImgCropServerComponent() {
         addFunction("imageUpdate", arguments -> {
             String imageBase64 = arguments.getString(0);
@@ -167,7 +170,16 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
                 imageUpdateListener.imageUpdate(imageBase64);
             }
         });
+    }
 
+    public void registerImgCropResultUpdateRpc(ImgCropResultUpdateRpc imgCropResultUpdateRpc) {
+        if (imgCropResultUpdateRpc != null) {
+            registerRpc(imgCropResultUpdateRpc);
+        }
+    }
+
+    public void gerImageCropResult() {
+        getRpcProxy(ImgCropClientRpc.class).gerImageCropResult();
     }
 
     public static class ImgCropState extends JavaScriptComponentState {
@@ -181,6 +193,5 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         public boolean showZoomer;
         public ViewPort viewPort;
         public float quality = 1;
-
     }
 }

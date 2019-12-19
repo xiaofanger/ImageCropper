@@ -10,45 +10,59 @@ import java.io.File;
  */
 public class ImageCropWindowOptions implements ScreenOptions {
 
-    private int cropQuality=10;
+    private int cropQuality = 10;
     private byte[] result;
     private ImgCropServerComponent.ViewPort viewPort;
 
-    public ImageCropWindowOptions(File file){
-        this(file,10,new ImgCropServerComponent.ViewPort());
+    public ImageCropWindowOptions(File file) {
+        this(file, 10, new ImgCropServerComponent.ViewPort());
     }
-    public ImageCropWindowOptions(File file, int cropQuality){
-        this(file,cropQuality,new ImgCropServerComponent.ViewPort());
+
+    public ImageCropWindowOptions(File file, int cropQuality) {
+        this(file, cropQuality, new ImgCropServerComponent.ViewPort());
     }
 
     /**
      * 图片剪裁选项
-     * @param file 要剪裁的图片文件
+     *
+     * @param file        要剪裁的图片文件
      * @param cropQuality 图片质量 1-10
-     * @param viewPort 目标区域视图配置
+     * @param viewPort    目标区域视图配置
      */
-    public ImageCropWindowOptions(File file, int cropQuality, ImgCropServerComponent.ViewPort viewPort){
-        this.imageFile=file;
-        this.cropQuality=cropQuality;
-        this.viewPort=viewPort;
+    public ImageCropWindowOptions(File file, int cropQuality, ImgCropServerComponent.ViewPort viewPort) {
+        this.imageFile = file;
+        this.cropQuality = cropQuality;
+        this.viewPort = viewPort;
     }
+
     private File imageFile;
+
     public File getImageFile() {
         return imageFile;
     }
+
     public int getCropQuality() {
         return cropQuality;
     }
-    public void setResult(byte[] result){
-        this.result=result;
+
+    public void setCropQuality(int cropQuality) {
+        this.cropQuality = cropQuality;
     }
-    public byte[] getResult(){
+
+    public void setResult(byte[] result) {
+        this.result = result;
+    }
+
+    public byte[] getResult() {
         return result;
     }
-    public String windowWidth="800px";
-    public String windowHeight="600px";
+
+    public String windowWidth = "800px";
+    public String windowHeight = "600px";
 
     public ImgCropServerComponent.ViewPort getViewPort() {
         return viewPort;
     }
+
+
 }

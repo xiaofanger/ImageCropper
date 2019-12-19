@@ -1,51 +1,124 @@
-function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent(){
+function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     var connector = this;
     var element = connector.getElement();
-    var croppie=null;
-    var quality=1;
-    connector.doDestroy=function(){
-        if(croppie!=null){
+    var rpcProxy = connector.getRpcProxy();
+    var croppie = null;
+    var quality = 1;
+    var imageBase64 = null;
+
+    // Create preview div element.
+    var preview = document.createElement('div');
+    preview.setAttribute('class', 'cr-preview')
+    var img = document.createElement('img');
+    img.setAttribute('class', 'cr-preview-img');
+    img.setAttribute('src', '');
+    var sizeLabel = document.createElement('div');
+    sizeLabel.setAttribute('class', 'cr-preview-label');
+
+    connector.doDestroy = function () {
+        if (croppie != null) {
             destroy();
         }
     };
-    var me=this;
-    var updateF=function(){
+    var me = this;
+    /**
+     * Crop result callback.
+     * @param pw Preview element height
+     */
+    var updateF = function (pw) {
         croppie.result({
-            quality:quality,
-            format:"jpeg"
+            type: 'base64',
+            quality: quality,
+            format: "jpeg"
         }).then(function (base64) {
-            me.imageUpdate(base64);
+            var size = getImgSize(base64);
+            img.src = base64;
+            sizeLabel.innerText = size+'KB';
+            imageBase64 = base64;
         })
     };
-    connector.onStateChange = function() {
-        var me=this;
-        var opts={};
+
+    /**
+     * Get image size.
+     * @param base64url
+     * @returns {string}
+     */
+    var getImgSize = function (base64url) {
+        var str = base64url.replace('data:image/jpeg;base64,', '');
+        var strLength = str.length;
+        var fileLength = parseInt(strLength - (strLength / 8) * 2);
+        return (fileLength / 1024).toFixed(2);
+    };
+
+
+    /**
+     * Initialize custom element attribute.
+     * @param state
+     * @param ew
+     * @param eh
+     * @param pw
+     */
+    var setElementAttr = function (state, ew, eh, pw) {
+        // Add preview elements after setting the crop component
+        // and set preview properties.
+        ew = element.offsetWidth;
+        eh = element.offsetHeight;
+        pw = ew * 0.46;
+        element.style.width = ew * 0.5 + 'px';
+        preview.style.height = pw + 'px';
+        preview.style.width = pw + 'px';
+        preview.style.maxHeight = pw + 'px';
+        preview.style.maxWidth = pw + 'px';
+        preview.appendChild(img);
+        element.parentElement.appendChild(preview);
+        element.parentElement.appendChild(sizeLabel);
+        sizeLabel.style.top = pw + 'px';
+        sizeLabel.style.left = preview.offsetLeft + 'px';
+        img.style.left = (pw - state.viewPort.width)/2 + 'px';
+        img.style.top = (pw - state.viewPort.height)/2 + 'px';
+    }
+
+    connector.registerRpc({
+        gerImageCropResult: function () {
+            rpcProxy.resultUpdate(imageBase64)
+        }
+    });
+
+    connector.onStateChange = function () {
+        var me = this;
+        var opts = {};
+        var ew, eh, pw;
         var state = connector.getState();
-        quality=state.quality;
-        quality=parseFloat(quality.toFixed(1));
-        if(croppie==null){
-            opts={
-                customClass:state.customClass,
-                enableExif:state.enableExif,
-                enableOrientation:state.enableOrientation,
-                enableResize:state.enableResize,
-                enableZoom:state.enableZoom,
-                mouseWheelZoom:state.mouseWheelZoom,
-                showZoomer:state.showZoomer,
-                viewport:state.viewPort
+        quality = state.quality;
+        quality = parseFloat(quality.toFixed(1));
+        if (croppie == null) {
+            opts = {
+                customClass: state.customClass,
+                enableExif: state.enableExif,
+                enableOrientation: state.enableOrientation,
+                enableResize: state.enableResize,
+                enableZoom: state.enableZoom,
+                mouseWheelZoom: state.mouseWheelZoom,
+                showZoomer: state.showZoomer,
+                viewport: state.viewPort
             };
-            element.addEventListener('update', function(ev) {
+            var url = "data:image/jpeg;base64," + state.imageBase64;
+            croppie = new Croppie(element, opts);
+            setElementAttr(state);
+
+            element.addEventListener('update', function (ev) {
                 updateF();
             });
-            var url="data:image/jpeg;base64,"+state.imageBase64;
-            croppie=new Croppie(element, opts);
             croppie.bind({
-                url:url
+                url: url
             })
-        }else {
+        } else {
+            // Reset element attribute.
+            croppie.element.style.width = '50%';
+            img.style.left = (pw - state.viewPort.width)/2 + 'px';
+            img.style.top = (pw - state.viewPort.height)/2 + 'px';
             updateF();
         }
-
 
     }
 }
