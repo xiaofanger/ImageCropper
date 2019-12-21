@@ -76,8 +76,8 @@ public class ImgCropSample extends Screen {
         File file = fileUploadingAPI.getFile(uploadField.getFileId());
         if (file != null) {
             notifications.create()
-                    .withCaption("提示")
-                    .withDescription("文件已经上传至临时存储，点击[剪裁]按钮对图片进行剪裁" + file.getAbsolutePath())
+                    .withCaption("Tip")
+                    .withDescription("File has been uploaded to temporary storage，click [Crop] button to start crop image" + file.getAbsolutePath())
                     .show();
             image.setSource(FileResource.class).setFile(file);
             cropBtn.setEnabled(true);
