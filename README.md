@@ -5,7 +5,7 @@
 Some times ,we need to upload images to an application,likes ID Card image, avatar image etc., almost all application restrict  the image's size. Usually  the original image is not fit the requirement, we need to  process the original image to fit the requirement of  application. This component will be helpful  for processing the original image.              
 
 #### FEATURES
-0. Based the  [Croppie Project](https://github.com/foliotek/croppie), so examine the project will be helpful for using this component
+0. Based on the  [Croppie Project](https://github.com/foliotek/croppie), so examine the project will be helpful for using this component
 0. Working with [FileUploadField](https://doc.cuba-platform.com/manual-7.1/gui_FileUploadField.html) from CUBA    
 0. Provide a simple API for using the component
 0. Provide some options for customize the component appearance,cropping area,image quality etc.
