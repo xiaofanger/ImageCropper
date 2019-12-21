@@ -1,20 +1,22 @@
-# CUBACN 图片剪裁组件
+# 
 
-#### 介绍
+#### OVERVIEW
 
-很多时候系统需要采集一些图片，同时对图片的尺寸、显示比例、大小有限制，通过手机或其它工具拍摄的照片往往不能满足系统对图片的限制条件。这些场景包括头像采集、身份证照片采集等。这个组件就是为了解决这些问题而设计的。
+Some times ,we need to upload images to an application,likes ID Card image, avatar image etc., almost all application restrict  the image's size. Usually  the original image is not fit the requirement, we need to  process the original image to fit the requirement of  application. This component will be helpful  for processing the original image.              
 
-#### 功能
-0. 与CUBA自带的图片上传组件配合使用
-0. 提供简单的API打开图片剪裁窗口
-0. 支持图片压缩、缩放、拖拽
-0. 支持剪裁区域大小、比例设置
-0. 剪裁结果实时预览
+#### FEATURES
+0. Based on the  [Croppie Project](https://github.com/foliotek/croppie), so examine the project will be helpful for using this component
+0. Working with [FileUploadField](https://doc.cuba-platform.com/manual-7.1/gui_FileUploadField.html) from CUBA    
+0. Provide a simple API for using the component
+0. Provide some options for customize the component appearance,cropping area,image quality etc.
+0. Review the cropping result in real time
+     
+#### Screenshot
+![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/screenshot.png)
+#### DEMO 
+![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/CropDemo.gif)
 
-#### 演示
-![image](https://github.com/cubacn/ImageCropper/blob/master/imageCropDemo.gif)
-
-#### 调用示例
+#### Sample Code
 ```java
     @Subscribe("cropBtn")
     public void onCropBtnClick(Button.ClickEvent event) {
@@ -23,28 +25,28 @@
         if(file==null){
             return;
         }
-        ImageCropWindowOptions options=new ImageCropWindowOptions(file);
-        ImageCropWindow.showAsDialog(this,options,(cropWindowAfterScreenCloseEvent)->{
+        // Create an viewport configuration object
+        ImgCropServerComponent.ViewPort viewPort =
+                new ImgCropServerComponent.ViewPort(200, 100,
+                ImgCropServerComponent.ViewPortType.square);
+        // Create an option object
+        ImageCropWindowOptions options = new ImageCropWindowOptions(file, 10, viewPort);
+        // Open a winow for cropping an image
+        ImageCropWindow.showAsDialog(this, options, (cropWindowAfterScreenCloseEvent)->{
+            // process the cropping result
             if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
-               //close by  "Cancel" button
+               //cropping window is closed by  "Cancel" button
             }else if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
-                // close by "ok" button
+                // cropping window is closed  by "ok" button,then we can get the cropping result in bytes.
                 byte[] result = options.getResult();
-                image.setSource(StreamResource.class)
-                        .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+                if (result != null) {
+                    //show the cropping result to an image component
+                    image.setSource(StreamResource.class)
+                            .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
+                }
             }
         });
     }
-
 ```
-
-#### 使用说明
-1. 见内置示例
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
+#### Sample Screen
+This component included a demo screen.Clone and run this project, you will see an "Sample" menu item in menu bar.    

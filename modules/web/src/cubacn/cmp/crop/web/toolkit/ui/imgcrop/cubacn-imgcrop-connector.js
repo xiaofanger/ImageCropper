@@ -5,10 +5,7 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     var croppie = null;
     var quality = 1;
     var imageBase64 = null;
-    var  formatNum =function(num) {
-        var reg=/\d{1,3}(?=(\d{3})+$)/g;
-        return (num + '').replace(reg, '$&,');
-    }
+
     // Create preview div element.
     var preview = document.createElement('div');
     preview.setAttribute('class', 'cr-preview')
@@ -42,24 +39,23 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
                 format: "jpeg"
             }).then(function (blob) {
                 size=blob.size;
-                sizeLabel.innerText = formatNum(size)+' bytes';
+                sizeLabel.innerText = formatFilesize(size);
             });
         })
     };
 
-    /**
-     * Get image size.
-     * @param base64url
-     * @returns {string}
-     */
-    var getImgSize = function (base64url) {
-        var str = base64url.replace('data:image/jpeg;base64,', '');
-        var strLength = str.length;
-        var fileLength = parseInt(strLength - (strLength / 8) * 2);
-        return (fileLength / 1024).toFixed(2);
+    var formatFilesize=function (filesize) {
+        if(!filesize){
+            return "0 Bytes";
+        }
+        var unitArr = ["Bytes", "KB", "MB"];
+        var index = 0;
+        var srcsize = parseFloat(filesize);
+        index = Math.floor(Math.log(srcsize) / Math.log(1024));
+        var size = srcsize / Math.pow(1024, index);
+        size = size.toFixed(2);
+        return size + unitArr[index];
     };
-
-
     /**
      * Initialize custom element attribute.
      * @param state

@@ -19,15 +19,15 @@ import java.io.InputStream;
 public class ImgCropServerComponent extends AbstractJavaScriptComponent {
 
     /**
-     * ViewPort 类型
+     * ViewPort Type
      */
     public enum ViewPortType {
         /**
-         * 矩形
+         * square
          */
         square,
         /**
-         * 圆形
+         * circle
          */
         circle
     }
@@ -36,6 +36,12 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
         public ViewPort() {
         }
 
+        /**
+         * Constructor
+         * @param width the width of viewport
+         * @param height the height of viewport
+         * @param viewPortType
+         */
         public ViewPort(int width, int height, ViewPortType viewPortType) {
             this.width = width;
             this.height = height;
@@ -68,7 +74,7 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
 
 
     /**
-     * 调整剪裁质量
+     * setter for quality
      * @param quality 0-1
      */
     public void setQuality(float quality) {
@@ -83,16 +89,16 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
 
 
     /**
-     * 创建剪裁控件
+     * Constructor for ImgCropServerComponent
      *
-     * @param imageFile         图片文件
-     * @param customClass       添加到剪裁控件上的自定义CSS类
-     * @param enableExif        启用Exif信息读取，启用后croppie控件可以通过读取图片的extif信息来识别图片方向
-     * @param enableOrientation 是否支持自定义方向
-     * @param enableResize      是否支持调整viewport区域大小
-     * @param enableZoom        是否支持缩放
-     * @param mouseWheelZoom    是否允许使用鼠标滚轮缩放
-     * @param showZoomer        是否显示绽放手柄
+     * @param imageFile
+     * @param customClass
+     * @param enableExif
+     * @param enableOrientation
+     * @param enableResize
+     * @param enableZoom
+     * @param mouseWheelZoom
+     * @param showZoomer
      * @param viewPort
      */
     public ImgCropServerComponent(

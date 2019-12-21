@@ -100,6 +100,12 @@ public class ImageCropWindow extends Screen {
         }
     }
 
+    /**
+     * Show a dialog for cropping an image
+     * @param origin caller screen
+     * @param options options for cropping
+     * @param closeEventConsumer callback for processing the cropping result
+     */
     public static void showAsDialog(FrameOwner origin, ImageCropWindowOptions options,
                                     Consumer<AfterScreenCloseEvent<ImageCropWindow>> closeEventConsumer){
         ScreenBuilders screenBuilders = AppBeans.get(ScreenBuilders.class);
