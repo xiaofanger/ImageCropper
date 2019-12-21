@@ -12,7 +12,7 @@ Some times ,we need to upload images to an application,likes ID Card image, avat
 0. Review the cropping result in real time
      
 #### Screenshot
-![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/CropDemo.gif)
+![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/screenshot.png)
 #### DEMO 
 ![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/imageCropDemo.gif)
 
