@@ -14,7 +14,7 @@ Some times ,we need to upload images to an application,likes ID Card image, avat
 #### Screenshot
 ![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/screenshot.png)
 #### DEMO 
-![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/imageCropDemo.gif)
+![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/CropDemo.gif)
 
 #### Sample Code
 ```java
