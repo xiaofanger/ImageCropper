@@ -6,6 +6,7 @@ import cubacn.cmp.crop.web.toolkit.ui.imgcrop.ImgCropServerComponent;
 import java.io.File;
 
 /**
+ * Represent  some options for cropping an image
  * Created by Ray.Lv on 2019/10/25.
  */
 public class ImageCropWindowOptions implements ScreenOptions {
@@ -23,11 +24,10 @@ public class ImageCropWindowOptions implements ScreenOptions {
     }
 
     /**
-     * 图片剪裁选项
-     *
-     * @param file        要剪裁的图片文件
-     * @param cropQuality 图片质量 1-10
-     * @param viewPort    目标区域视图配置
+     * Contructor
+     * @param file      the image file to be cropped
+     * @param cropQuality the quality for  output image,1-10
+     * @param viewPort Viewport
      */
     public ImageCropWindowOptions(File file, int cropQuality, ImgCropServerComponent.ViewPort viewPort) {
         this.imageFile = file;

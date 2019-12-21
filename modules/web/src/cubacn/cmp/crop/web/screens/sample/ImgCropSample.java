@@ -48,18 +48,22 @@ public class ImgCropSample extends Screen {
         if(file==null){
             return;
         }
+        // Create an viewport configuration object
         ImgCropServerComponent.ViewPort viewPort =
                 new ImgCropServerComponent.ViewPort(200, 100,
                 ImgCropServerComponent.ViewPortType.square);
+        // Create an option object
         ImageCropWindowOptions options = new ImageCropWindowOptions(file, 10, viewPort);
-
+        // Open a winow for cropping an image
         ImageCropWindow.showAsDialog(this, options, (cropWindowAfterScreenCloseEvent)->{
+            // process the cropping result
             if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_DISCARD_AND_CLOSE_ACTION)){
-               //close by  "Cancel" button
+               //cropping window is closed by  "Cancel" button
             }else if(cropWindowAfterScreenCloseEvent.getCloseAction().equals(WINDOW_COMMIT_AND_CLOSE_ACTION)){
-                // close by "ok" button
+                // cropping window is closed  by "ok" button,then we can get the cropping result in bytes.
                 byte[] result = options.getResult();
                 if (result != null) {
+                    //show the cropping result to an image component
                     image.setSource(StreamResource.class)
                             .setStreamSupplier(()-> new ByteArrayInputStream(result)).setBufferSize(1024);
                 }
