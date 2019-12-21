@@ -57,7 +57,13 @@ public class ImageCropWindowOptions implements ScreenOptions {
         return result;
     }
 
+    /**
+     * dialog width
+     */
     public String windowWidth = "800px";
+    /**
+     * dialog height
+     */
     public String windowHeight = "600px";
 
     public ImgCropServerComponent.ViewPort getViewPort() {
