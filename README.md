@@ -1,16 +1,19 @@
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
  
-
 #### OVERVIEW
 
-Some times ,we need to upload images to an application,likes ID Card image, avatar image etc., almost all application restrict  the image's size. Usually  the original image is not fit the requirement, we need to  process the original image to fit the requirement of  application. This component will be helpful  for processing the original image.              
+In modern enterprise applications, uploading image is a popular requirement, for example, upload ID Card images, avatar images or image attachments etc.
+Almost all applications have restriction on image size, in order to reduce upload time and stored file size.
+
+Generally, the original image does not fit the size requirement, we need to process the raw image to fit the application restriction. 
+This component will be helpful for processing the original image.              
 
 #### FEATURES
-0. Based on the  [Croppie Project](https://github.com/foliotek/croppie), so examine the project will be helpful for using this component
+0. Based on the  [Croppie Project](https://github.com/foliotek/croppie), so investigating that project will be helpful before using this component
 0. Working with [FileUploadField](https://doc.cuba-platform.com/manual-7.1/gui_FileUploadField.html) from CUBA    
-0. Provide a simple API for using the component
-0. Provide some options for customize the component appearance,cropping area,image quality etc.
-0. Review the cropping result in real time
+0. Provided a simple API for using the component
+0. Provided some options for customize the component appearance, cropping area, image quality etc
+0. Reviewing the cropping result in real time
      
 #### Screenshot
 ![image](https://github.com/cubacn/ImageCropper/blob/master/demoImage/screenshot.png)
@@ -50,4 +53,4 @@ Some times ,we need to upload images to an application,likes ID Card image, avat
     }
 ```
 #### Sample Screen
-This component included a demo screen.Clone and run this project, you will see an "Sample" menu item in menu bar.    
+This component included a demo screen. Clone and run this project, you will see an "Sample" menu item in menu bar.    
