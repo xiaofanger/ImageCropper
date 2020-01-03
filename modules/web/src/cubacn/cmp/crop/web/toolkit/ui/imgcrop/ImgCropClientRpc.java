@@ -6,4 +6,9 @@ public interface ImgCropClientRpc extends ClientRpc {
 
     String gerImageCropResult();
 
+    /**
+     * Rotate 90 degrees clockwise or counterclockwise.
+     */
+    void rotationImgAngle(int angle);
+
 }

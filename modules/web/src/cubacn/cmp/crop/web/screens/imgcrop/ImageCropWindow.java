@@ -100,6 +100,16 @@ public class ImageCropWindow extends Screen {
         }
     }
 
+    @Subscribe("spinLeft")
+    public void onSpinLeftClick(Button.ClickEvent event) {
+        this.imgCrop.setImageRotationAngle(90);
+    }
+
+    @Subscribe("spinRight")
+    public void onSpinRightClick(Button.ClickEvent event) {
+        this.imgCrop.setImageRotationAngle(-90);
+    }
+
     /**
      * Show a dialog for cropping an image
      * @param origin caller screen

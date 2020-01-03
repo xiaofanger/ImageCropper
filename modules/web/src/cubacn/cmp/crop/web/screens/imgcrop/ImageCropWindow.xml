@@ -12,6 +12,13 @@
                 <form width="100%">
                     <column>
                         <buttonsPanel>
+                            <label value="msg://rotate" align="MIDDLE_CENTER"/>
+                            <button id="spinLeft" icon="ROTATE_LEFT" align="MIDDLE_CENTER" />
+                            <button id="spinRight" icon="ROTATE_RIGHT" align="MIDDLE_CENTER"  />
+                        </buttonsPanel>
+                    </column>
+                    <column>
+                        <buttonsPanel>
                             <label value="msg://viewport" align="MIDDLE_CENTER"/>
                             <label id="viewportLabel" align="MIDDLE_CENTER"/>
                         </buttonsPanel>

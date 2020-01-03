@@ -69,7 +69,7 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
 
     public ImgCropServerComponent(File imageFileDescriptor, ViewPort viewPort, int quality
     ) {
-        this(imageFileDescriptor, "", false, false, false, true, true, true, viewPort,quality);
+        this(imageFileDescriptor, "", false, true, false, true, true, true, viewPort,quality);
     }
 
 
@@ -186,6 +186,10 @@ public class ImgCropServerComponent extends AbstractJavaScriptComponent {
 
     public void gerImageCropResult() {
         getRpcProxy(ImgCropClientRpc.class).gerImageCropResult();
+    }
+
+    public void setImageRotationAngle(int angle) {
+        getRpcProxy(ImgCropClientRpc.class).rotationImgAngle(angle);
     }
 
     public static class ImgCropState extends JavaScriptComponentState {

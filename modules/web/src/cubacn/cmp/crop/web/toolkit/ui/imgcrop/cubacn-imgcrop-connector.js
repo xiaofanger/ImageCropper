@@ -86,6 +86,11 @@ function cubacn_cmp_crop_web_toolkit_ui_imgcrop_ImgCropServerComponent() {
     connector.registerRpc({
         gerImageCropResult: function () {
             rpcProxy.resultUpdate(imageBase64)
+        },
+        rotationImgAngle: function (angle) {
+            if (croppie) {
+                croppie.rotate(angle)
+            }
         }
     });
 
